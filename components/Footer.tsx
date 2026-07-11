@@ -24,7 +24,7 @@ export function Footer() {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="text-sm text-ink/80 transition-colors hover:text-primary-strong"
+                  className="link-underline text-sm text-ink/80 transition-colors hover:text-primary-strong"
                 >
                   {item.label}
                 </Link>
@@ -41,7 +41,7 @@ export function Footer() {
             <li>
               <a
                 href={`mailto:${site.email}`}
-                className="text-ink/80 transition-colors hover:text-primary-strong"
+                className="link-underline text-ink/80 transition-colors hover:text-primary-strong"
               >
                 {site.email}
               </a>
@@ -49,7 +49,7 @@ export function Footer() {
             <li>
               <a
                 href={site.socials.instagram}
-                className="text-ink/80 transition-colors hover:text-primary-strong"
+                className="link-underline text-ink/80 transition-colors hover:text-primary-strong"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -73,7 +73,12 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {site.name}. Handmade with care.
           </p>
-          <p>Candles · Bouquets · Stage Decor</p>
+          <div className="flex items-center gap-4">
+            <Link href="/studio" className="link-underline transition-colors hover:text-ink">
+              Team photo studio
+            </Link>
+            <span aria-hidden>Candles · Bouquets · Stage Decor</span>
+          </div>
         </div>
       </div>
     </footer>

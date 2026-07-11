@@ -48,8 +48,6 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  /* Subtle warm paper grain for tactility */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
 }
 
 h1, h2, h3, h4 {
@@ -84,23 +82,14 @@ h1, h2, h3, h4 {
     @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary-strong;
   }
 
-  /* Primary CTA with a single, restrained "dazzle" shimmer */
+  /* Primary CTA — purposeful hover/press feedback only (no decorative motion).
+     Lifts slightly toward the pointer on hover, presses down on tap. */
   .btn-primary {
-    @apply relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-full
+    @apply inline-flex items-center justify-center gap-2 rounded-full
            bg-primary px-6 py-3 text-sm font-semibold text-surface shadow-soft
-           transition-all duration-200 ease-out-soft
-           hover:bg-primary-strong hover:shadow-lift active:scale-[0.98];
+           transition-[transform,background-color,box-shadow] duration-200 ease-out-soft
+           hover:-translate-y-0.5 hover:bg-primary-strong hover:shadow-lift active:translate-y-0 active:scale-[0.98];
     min-height: 48px;
-  }
-  .btn-primary::after {
-    content: "";
-    @apply pointer-events-none absolute inset-0 animate-shimmer;
-    background: linear-gradient(
-      100deg,
-      transparent 20%,
-      rgba(255, 255, 255, 0.35) 50%,
-      transparent 80%
-    );
   }
 
   .btn-ghost {
@@ -154,23 +143,45 @@ h1, h2, h3, h4 {
 }
 
 @layer utilities {
-  /* Warm film-grade + fine grain over photography for a cohesive, art-directed
-     look (also gently unifies mixed stock sources). */
+  /* Warm gradient wash over photography — bottom darkening for caption
+     legibility. Plain compositing (no blend mode) for cheap, snappy paint. */
   .grade::after {
     content: "";
     @apply pointer-events-none absolute inset-0;
-    background:
-      linear-gradient(180deg, rgba(42, 36, 34, 0) 40%, rgba(42, 36, 34, 0.45) 100%),
-      radial-gradient(120% 120% at 50% 0%, rgba(217, 164, 65, 0.12), transparent 60%);
-    mix-blend-mode: multiply;
+    background: linear-gradient(180deg, rgba(42, 36, 34, 0) 45%, rgba(42, 36, 34, 0.5) 100%);
   }
-  .grain::before {
-    content: "";
-    @apply pointer-events-none absolute inset-0 opacity-[0.12];
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  /* Auto-warm any photograph so amateur phone snaps in mixed lighting still read
+     as one warm, cohesive set. Subtle by default — the site does the styling so
+     the team doesn't have to shoot like pros. */
+  .img-warm {
+    filter: saturate(0.94) contrast(1.02) brightness(1.02);
   }
+  /* Stronger correction for photos that clash (cool/blue casts, harsh flash):
+     a terracotta soft-light wash pulls hues toward the palette. */
+  .wash-warm {
+    @apply pointer-events-none absolute inset-0;
+    background: linear-gradient(160deg, rgba(217, 164, 65, 0.22), rgba(197, 107, 74, 0.28));
+    mix-blend-mode: soft-light;
+  }
+  .wash-warm.is-strong {
+    background: linear-gradient(160deg, rgba(217, 164, 65, 0.4), rgba(197, 107, 74, 0.5));
+  }
+
   .text-shadow-soft {
     text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35);
+  }
+
+  /* Signature link underline: a warm line that wipes in from the left on hover. */
+  .link-underline {
+    background-image: linear-gradient(var(--primary-strong-line), var(--primary-strong-line));
+    background-size: 0% 1.5px;
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    transition: background-size 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    --primary-strong-line: rgb(var(--primary-strong));
+  }
+  .link-underline:hover {
+    background-size: 100% 1.5px;
   }
   .mask-fade-r {
     -webkit-mask-image: linear-gradient(90deg, #000 82%, transparent);
@@ -182,13 +193,12 @@ h1, h2, h3, h4 {
    Motion — respect reduced-motion (mandatory)
    ============================================================ */
 @media (prefers-reduced-motion: reduce) {
-  * {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.001ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
-  }
-  .btn-primary::after {
-    display: none;
   }
 }

@@ -11,20 +11,15 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/quote/page": [
+    "/template": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/quote/page.js"
+      "static/chunks/app/template.js"
     ],
-    "/portfolio/page": [
+    "/faq/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/portfolio/page.js"
-    ],
-    "/catalog/page": [
-      "static/chunks/webpack.js",
-      "static/chunks/main-app.js",
-      "static/chunks/app/catalog/page.js"
+      "static/chunks/app/faq/page.js"
     ]
   }
 }

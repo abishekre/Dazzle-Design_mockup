@@ -29,15 +29,15 @@ export default function AboutPage() {
       <section className="container-content mt-12 grid gap-8 sm:grid-cols-3">
         {team.map((m, i) => (
           <Reveal key={m.name} delay={i * 0.08} as="article">
-            <div className="overflow-hidden rounded-xl border border-border bg-surface shadow-soft">
-              <Photo tone={m.tone} grade={false} className="aspect-[4/5] rounded-none">
+            <div>
+              <Photo tone={m.tone} grade={false} className="aspect-[4/5]" rounded="rounded-xl">
                 <div className="absolute inset-0 flex items-center justify-center">
                   <span className="font-display text-6xl text-surface/90 text-shadow-soft">
                     {initials(m.name)}
                   </span>
                 </div>
               </Photo>
-              <div className="p-5">
+              <div className="mt-4">
                 <h2 className="font-display text-xl">{m.name}</h2>
                 <p className="mt-1 text-sm text-muted">{m.role}</p>
               </div>

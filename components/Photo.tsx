@@ -16,6 +16,7 @@ export function Photo({
   priority,
   sizes = "(max-width: 768px) 90vw, 33vw",
   grade = true,
+  wash,
   className = "",
   rounded = "rounded-lg",
   children,
@@ -26,13 +27,15 @@ export function Photo({
   priority?: boolean;
   sizes?: string;
   grade?: boolean;
+  /** Extra warm correction for photos that clash with the palette. */
+  wash?: boolean | "strong";
   className?: string;
   rounded?: string;
   children?: React.ReactNode;
 }) {
   return (
     <div
-      className={`group/photo relative overflow-hidden ${rounded} ${grade ? "grade grain" : ""} ${className}`}
+      className={`group/photo relative overflow-hidden ${rounded} ${grade ? "grade" : ""} ${className}`}
     >
       {src ? (
         <Image
@@ -41,14 +44,17 @@ export function Photo({
           fill
           sizes={sizes}
           priority={priority}
-          className="object-cover transition-transform duration-[1200ms] ease-out-soft group-hover/photo:scale-[1.06]"
+          className="img-warm object-cover transition-transform duration-700 ease-out-soft group-hover/photo:scale-[1.05]"
         />
       ) : (
         <div
-          className="absolute inset-0 transition-transform duration-[1200ms] ease-out-soft group-hover/photo:scale-[1.06]"
+          className="absolute inset-0 transition-transform duration-700 ease-out-soft group-hover/photo:scale-[1.05]"
           style={{ backgroundImage: toneGradient[tone] }}
           aria-hidden
         />
+      )}
+      {wash && src && (
+        <span className={`wash-warm ${wash === "strong" ? "is-strong" : ""}`} aria-hidden />
       )}
       {children}
     </div>

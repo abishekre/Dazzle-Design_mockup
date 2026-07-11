@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const faqs = [
   {
@@ -28,7 +27,6 @@ const faqs = [
 
 export function FaqList() {
   const [open, setOpen] = useState<number | null>(0);
-  const reduce = useReducedMotion();
 
   return (
     <div className="container-content mt-10">
@@ -45,7 +43,7 @@ export function FaqList() {
               >
                 <span className="font-display text-lg text-ink">{f.q}</span>
                 <span
-                  className={`grid h-7 w-7 shrink-0 place-items-center rounded-full border border-border text-primary-strong transition-transform duration-300 ${
+                  className={`grid h-7 w-7 shrink-0 place-items-center rounded-full border border-border text-primary-strong transition-transform duration-300 ease-out-soft ${
                     isOpen ? "rotate-45" : ""
                   }`}
                   aria-hidden
@@ -53,19 +51,16 @@ export function FaqList() {
                   +
                 </span>
               </button>
-              <AnimatePresence initial={false}>
-                {isOpen && (
-                  <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: reduce ? 0 : 0.3, ease: [0.22, 1, 0.36, 1] }}
-                    className="overflow-hidden"
-                  >
-                    <p className="max-w-prose pb-5 text-muted">{f.a}</p>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {/* grid-rows 0fr→1fr animates height on the GPU — no JS measurement */}
+              <div
+                className={`grid transition-[grid-template-rows,opacity] duration-300 ease-out-soft ${
+                  isOpen ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0"
+                }`}
+              >
+                <div className="overflow-hidden">
+                  <p className="max-w-prose pb-5 text-muted">{f.a}</p>
+                </div>
+              </div>
             </li>
           );
         })}

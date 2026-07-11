@@ -1,44 +1,77 @@
 "use client";
 
-import { motion, useReducedMotion, type Variants } from "framer-motion";
-import type { ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+
+const EASE = "cubic-bezier(0.22, 1, 0.36, 1)";
 
 /**
- * Restrained scroll reveal: gentle fade + rise, once, ease-out.
- * Collapses to a plain fade when the user prefers reduced motion.
+ * Scroll-triggered entrance (staggered fade-up). Dependency-free — no framer —
+ * so it stays cheap on every route.
+ *
+ * Bug-proofing (this is why it's not `whileInView`):
+ *  - SSR/no-JS/reduced-motion → content renders visible. It can never get stuck.
+ *  - Below-fold elements are hidden synchronously in useLayoutEffect (before the
+ *    browser paints, so no flash), then revealed by an IntersectionObserver.
+ *  - Above-fold elements stay visible (no hide → no flash on first paint).
  */
 export function Reveal({
   children,
   delay = 0,
-  className,
-  as = "div",
+  className = "",
+  as: Tag = "div",
 }: {
   children: ReactNode;
   delay?: number;
   className?: string;
   as?: "div" | "li" | "section" | "article";
 }) {
-  const reduce = useReducedMotion();
-  const MotionTag = motion[as];
+  const ref = useRef<HTMLElement>(null);
+  const [hidden, setHidden] = useState(false);
+  const [revealed, setRevealed] = useState(false);
 
-  const variants: Variants = {
-    hidden: { opacity: 0, y: reduce ? 0 : 14 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.5, delay, ease: [0.22, 1, 0.36, 1] },
-    },
-  };
+  useLayoutEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    // Only arm the animation for content below the fold; above-the-fold stays
+    // visible so the first paint is never blank or flashing.
+    const belowFold = el.getBoundingClientRect().top > window.innerHeight * 0.85;
+    if (belowFold) setHidden(true);
+  }, []);
+
+  useEffect(() => {
+    if (!hidden) return;
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          io.disconnect();
+        }
+      },
+      { rootMargin: "0px 0px -12% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [hidden]);
+
+  // Instant hide (no transition) → then transition in on reveal.
+  const style =
+    !hidden
+      ? undefined
+      : revealed
+        ? {
+            opacity: 1,
+            transform: "none",
+            transition: `opacity 0.6s ${EASE}, transform 0.6s ${EASE}`,
+            transitionDelay: `${delay}s`,
+          }
+        : { opacity: 0, transform: "translateY(18px)" };
 
   return (
-    <MotionTag
-      className={className}
-      variants={variants}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, margin: "-60px" }}
-    >
+    <Tag ref={ref as never} className={className} style={style}>
       {children}
-    </MotionTag>
+    </Tag>
   );
 }

@@ -26,7 +26,7 @@ export function Hero() {
   return (
     <section
       ref={ref}
-      className="edge relative grade grain flex min-h-[100svh] items-end overflow-hidden sm:min-h-[92vh]"
+      className="edge relative flex min-h-[100svh] items-end overflow-hidden sm:min-h-[92vh]"
     >
       {/* Parallax photograph */}
       <motion.div style={{ y: imgY, scale: imgScale }} className="absolute inset-0 -z-10">
@@ -36,7 +36,7 @@ export function Hero() {
           fill
           priority
           sizes="100vw"
-          className="object-cover object-center"
+          className="img-warm object-cover object-center"
         />
         {/* legibility wash — deeper at the bottom where text sits */}
         <div

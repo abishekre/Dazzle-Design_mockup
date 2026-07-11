@@ -1,4 +1,4 @@
-// File: C:\Users\abish\Documents\js\vibecode\claude\Dazzle Design\app\portfolio\page.tsx
+// File: C:\Users\abish\Documents\js\github\Dazzle-Design_mockup\app\portfolio\page.tsx
 import * as entry from '../../../../app/portfolio/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

@@ -1,4 +1,4 @@
-// File: C:\Users\abish\Documents\js\vibecode\claude\Dazzle Design\app\quote\page.tsx
+// File: C:\Users\abish\Documents\js\github\Dazzle-Design_mockup\app\quote\page.tsx
 import * as entry from '../../../../app/quote/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 
