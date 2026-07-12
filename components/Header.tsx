@@ -1,26 +1,26 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { nav, site } from "@/lib/site";
-import { SparkIcon } from "./icons";
+import { LogoMark } from "./Logo";
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const pathname = usePathname();
 
-  // Home has a full-bleed photo hero → header floats over it (light) until
-  // scrolled. Other pages get the solid treatment immediately.
-  const isHome = pathname === "/";
-  const overHero = isHome && !scrolled && !open;
+  // The header floats transparently at the very top, then turns solid on
+  // scroll. Text stays dark throughout (the hero is light/ivory now).
+  const atTop = !scrolled && !open;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
+    const raf = requestAnimationFrame(onScroll); // defer initial check off the render phase
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
   }, []);
 
   useEffect(() => {
@@ -30,23 +30,21 @@ export function Header() {
     };
   }, [open]);
 
-  const tone = overHero ? "text-surface" : "text-ink";
-
   return (
     <header
       className={`fixed inset-x-0 top-0 z-40 transition-colors duration-300 ${
-        overHero
+        atTop
           ? "border-b border-transparent bg-transparent"
           : "border-b border-border bg-bg/85 backdrop-blur-md"
       }`}
     >
-      <div className="container-content flex h-[72px] items-center justify-between">
+      <div className="container-content flex h-16 items-center justify-between sm:h-[72px]">
         <Link
           href="/"
-          className={`flex items-center gap-2 font-display text-xl font-medium tracking-tight ${tone}`}
+          className="flex items-center gap-2.5 font-display text-lg font-medium tracking-tight text-ink sm:text-xl"
           onClick={() => setOpen(false)}
         >
-          <SparkIcon className="h-4 w-4 text-accent" />
+          <LogoMark className="h-8 w-8 shrink-0 text-primary-strong sm:h-9 sm:w-9" />
           {site.name}
         </Link>
 
@@ -55,11 +53,7 @@ export function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className={`text-sm font-medium transition-colors ${
-                overHero
-                  ? "text-surface/85 hover:text-surface"
-                  : "text-muted hover:text-ink"
-              }`}
+              className="text-sm font-medium text-muted transition-colors hover:text-ink"
             >
               {item.label}
             </Link>
@@ -71,7 +65,7 @@ export function Header() {
 
         <button
           type="button"
-          className={`flex h-11 w-11 items-center justify-center md:hidden ${tone}`}
+          className="flex h-11 w-11 items-center justify-center text-ink md:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}

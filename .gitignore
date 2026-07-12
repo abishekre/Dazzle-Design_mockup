@@ -27,6 +27,9 @@ yarn-error.log*
 .env
 .env*.local
 
+# fetched social media exports (large; not for the repo)
+/downloaded
+
 # vercel
 .vercel
 

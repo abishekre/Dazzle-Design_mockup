@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Image, { type StaticImageData } from "next/image";
 import { toneGradient, type Tone } from "@/lib/content";
 
 /**
@@ -12,7 +12,7 @@ import { toneGradient, type Tone } from "@/lib/content";
 export function Photo({
   src,
   alt = "",
-  tone = "terracotta",
+  tone = "ivory",
   priority,
   sizes = "(max-width: 768px) 90vw, 33vw",
   grade = true,
@@ -21,7 +21,7 @@ export function Photo({
   rounded = "rounded-lg",
   children,
 }: {
-  src?: string;
+  src?: string | StaticImageData;
   alt?: string;
   tone?: Tone;
   priority?: boolean;
@@ -33,6 +33,9 @@ export function Photo({
   rounded?: string;
   children?: React.ReactNode;
 }) {
+  // Static imports carry a blurDataURL → show an instant low-res placeholder
+  // instead of an empty box while the full image loads.
+  const canBlur = typeof src === "object" && "blurDataURL" in src;
   return (
     <div
       className={`group/photo relative overflow-hidden ${rounded} ${grade ? "grade" : ""} ${className}`}
@@ -44,6 +47,8 @@ export function Photo({
           fill
           sizes={sizes}
           priority={priority}
+          quality={70}
+          placeholder={canBlur ? "blur" : "empty"}
           className="img-warm object-cover transition-transform duration-700 ease-out-soft group-hover/photo:scale-[1.05]"
         />
       ) : (

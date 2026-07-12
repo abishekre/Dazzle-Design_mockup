@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { SparkIcon } from "./icons";
+import { eventTypes } from "@/lib/site";
 
 const MIN_LEAD_DAYS = 7;
 
@@ -108,11 +109,9 @@ export function QuoteForm() {
           <Field id="eventType" label="Event type">
             <select id="eventType" name="eventType" className={field} defaultValue="">
               <option value="" disabled>Choose one…</option>
-              <option>Wedding</option>
-              <option>Bridal / baby shower</option>
-              <option>Birthday</option>
-              <option>Anniversary</option>
-              <option>Corporate / other</option>
+              {eventTypes.map((t) => (
+                <option key={t}>{t}</option>
+              ))}
             </select>
           </Field>
         </div>

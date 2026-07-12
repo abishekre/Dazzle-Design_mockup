@@ -12,7 +12,12 @@ export function PageHeader({
   return (
     <header className="container-content pt-28 sm:pt-32">
       <Reveal>
-        <p className="eyebrow">{eyebrow}</p>
+        <p className="eyebrow">
+          <svg viewBox="0 0 20 20" aria-hidden className="h-2.5 w-2.5 text-accent">
+            <path fill="currentColor" d="M10,2 L13,10 L10,18 L7,10 Z" />
+          </svg>
+          {eyebrow}
+        </p>
       </Reveal>
       <Reveal delay={0.05}>
         <h1 className="mt-4 max-w-2xl font-display text-4xl sm:text-5xl">{title}</h1>

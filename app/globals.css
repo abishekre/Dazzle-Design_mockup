@@ -6,22 +6,24 @@
    Warm Artisan — semantic design tokens
    ============================================================ */
 /* Tokens stored as "r g b" channel triplets so Tailwind opacity modifiers
-   (e.g. text-ink/70) work. Reference in raw CSS as rgb(var(--token)). */
+   (e.g. text-ink/70) work. Reference in raw CSS as rgb(var(--token)).
+   Palette: White / Gold / Ivory — elegant event decor (matches the team's
+   real white-and-gold styling). */
 :root {
-  --bg: 244 237 228;          /* #f4ede4 cream */
-  --surface: 251 247 241;     /* #fbf7f1 */
-  --surface-2: 240 230 216;   /* #f0e6d8 */
-  --ink: 42 36 34;            /* #2a2422 */
-  --muted: 107 97 90;         /* #6b615a warm grey */
-  --primary: 197 107 74;      /* #c56b4a terracotta — fills, large text */
-  --primary-strong: 180 87 58;/* #b4573a AA-safe terracotta for small text */
-  --secondary: 124 139 110;   /* #7c8b6e sage */
-  --accent: 217 164 65;       /* #d9a441 muted gold — decorative only */
-  --border: 227 216 201;      /* #e3d8c9 */
+  --bg: 250 247 241;          /* #faf7f1 ivory */
+  --surface: 255 255 255;     /* #ffffff white */
+  --surface-2: 243 236 224;   /* #f3ece0 champagne */
+  --ink: 35 32 28;            /* #23201c warm near-black */
+  --muted: 124 114 103;       /* #7c7267 warm grey */
+  --primary: 180 146 63;      /* #b4923f gold — accents, large text */
+  --primary-strong: 140 108 44;/* #8c6c2c AA-safe gold for small text on ivory */
+  --secondary: 169 176 160;   /* #a9b0a0 soft sage (greenery) */
+  --accent: 216 180 92;       /* #d8b45c bright gold — decorative sparkle */
+  --border: 234 226 211;      /* #eae2d3 */
 
   /* Lead-time signal colors (paired with label + icon, never color alone) */
   --lead-green: 110 138 94;   /* #6e8a5e */
-  --lead-amber: 217 164 65;   /* #d9a441 */
+  --lead-amber: 214 160 70;   /* #d6a046 */
   --lead-red: 192 73 47;      /* #c0492f */
 }
 
@@ -48,6 +50,14 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /* A whisper of paper texture for the handmade feel — two tiny repeating
+     radial gradients, essentially free to paint (no filters/blend-modes,
+     unlike the SVG turbulence grain we removed for performance earlier). */
+  background-image:
+    radial-gradient(rgba(35, 32, 28, 0.05) 0.6px, transparent 0.6px),
+    radial-gradient(rgba(35, 32, 28, 0.035) 0.6px, transparent 0.6px);
+  background-size: 26px 26px, 26px 26px;
+  background-position: 0 0, 13px 13px;
 }
 
 h1, h2, h3, h4 {
@@ -82,13 +92,13 @@ h1, h2, h3, h4 {
     @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-primary-strong;
   }
 
-  /* Primary CTA — purposeful hover/press feedback only (no decorative motion).
+  /* Primary CTA — elegant charcoal fill (AA on white), gold accent on hover.
      Lifts slightly toward the pointer on hover, presses down on tap. */
   .btn-primary {
     @apply inline-flex items-center justify-center gap-2 rounded-full
-           bg-primary px-6 py-3 text-sm font-semibold text-surface shadow-soft
-           transition-[transform,background-color,box-shadow] duration-200 ease-out-soft
-           hover:-translate-y-0.5 hover:bg-primary-strong hover:shadow-lift active:translate-y-0 active:scale-[0.98];
+           bg-ink px-6 py-3 text-sm font-semibold text-surface shadow-soft
+           transition-[transform,box-shadow] duration-200 ease-out-soft
+           hover:-translate-y-0.5 hover:shadow-lift active:translate-y-0 active:scale-[0.98];
     min-height: 48px;
   }
 
@@ -140,6 +150,20 @@ h1, h2, h3, h4 {
   .hsnap {
     @apply snap-start shrink-0;
   }
+
+  /* Premium hover treatment for photo tiles: a soft gold ring blooms in and
+     the tile lifts slightly. Applied to the tile wrapper (not the image), so
+     it composites cheaply (box-shadow, no filter). */
+  .tile-hover {
+    @apply transition-[transform,box-shadow] duration-300 ease-out-soft;
+    box-shadow: 0 0 0 0 rgba(216, 180, 92, 0);
+  }
+  .tile-hover:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 0 0 2px rgba(216, 180, 92, 0.55),
+      0 18px 34px rgba(35, 32, 28, 0.16);
+  }
 }
 
 @layer utilities {
@@ -150,21 +174,21 @@ h1, h2, h3, h4 {
     @apply pointer-events-none absolute inset-0;
     background: linear-gradient(180deg, rgba(42, 36, 34, 0) 45%, rgba(42, 36, 34, 0.5) 100%);
   }
-  /* Auto-warm any photograph so amateur phone snaps in mixed lighting still read
-     as one warm, cohesive set. Subtle by default — the site does the styling so
-     the team doesn't have to shoot like pros. */
+  /* Gentle clean-up for amateur phone snaps — keeps the bright, true-to-life
+     white-and-gold look (no heavy colour cast). The site does the polish so the
+     team doesn't need to shoot like pros. */
   .img-warm {
-    filter: saturate(0.94) contrast(1.02) brightness(1.02);
+    filter: saturate(1.02) contrast(1.03) brightness(1.02);
   }
-  /* Stronger correction for photos that clash (cool/blue casts, harsh flash):
-     a terracotta soft-light wash pulls hues toward the palette. */
+  /* Optional correction for photos that come out dull or slightly off — a soft
+     champagne wash lifts them toward the palette. */
   .wash-warm {
     @apply pointer-events-none absolute inset-0;
-    background: linear-gradient(160deg, rgba(217, 164, 65, 0.22), rgba(197, 107, 74, 0.28));
+    background: linear-gradient(160deg, rgba(216, 180, 92, 0.14), rgba(255, 255, 255, 0.1));
     mix-blend-mode: soft-light;
   }
   .wash-warm.is-strong {
-    background: linear-gradient(160deg, rgba(217, 164, 65, 0.4), rgba(197, 107, 74, 0.5));
+    background: linear-gradient(160deg, rgba(216, 180, 92, 0.3), rgba(255, 250, 240, 0.2));
   }
 
   .text-shadow-soft {

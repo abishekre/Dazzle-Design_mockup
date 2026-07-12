@@ -2,44 +2,44 @@ import type { Metadata } from "next";
 import { PageHeader } from "@/components/PageHeader";
 import { Photo } from "@/components/Photo";
 import { Reveal } from "@/components/Reveal";
+import type { Tone } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "About",
-  description: "Meet the three makers behind Dazzle Design.",
+  description: "Meet the five women behind Dazzle Designs — event decor near Houston.",
 };
 
-const team = [
-  { name: "Founder One", role: "Candles & scent", tone: "gold" as const },
-  { name: "Founder Two", role: "Florals & bouquets", tone: "sage" as const },
-  { name: "Founder Three", role: "Stage & styling", tone: "terracotta" as const },
+const team: { name: string; role: string; tone: Tone }[] = [
+  { name: "Founder One", role: "Design & styling", tone: "gold" },
+  { name: "Founder Two", role: "Florals", tone: "blush" },
+  { name: "Founder Three", role: "Backdrops & drapery", tone: "ivory" },
+  { name: "Founder Four", role: "Balloons", tone: "sky" },
+  { name: "Founder Five", role: "Setup & install", tone: "sage" },
 ];
 
-const initials = (name: string) =>
-  name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
+const initials = (name: string) => name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
 
 export default function AboutPage() {
   return (
     <>
       <PageHeader
         eyebrow="Our story"
-        title="Three makers, one weekend studio"
-        intro="Dazzle Design started as a shared love of making things by hand. On weekends, the three of us turn candles, flowers and fabric into decor for celebrations across the city."
+        title="Five friends, one shared craft"
+        intro="Dazzle Designs is five women — mothers and nurses — who found a new creative calling. On our own time, we turn flowers, drapery and balloons into decor for celebrations across Greater Houston."
       />
 
-      <section className="container-content mt-12 grid gap-8 sm:grid-cols-3">
+      <section className="container-content mt-12 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
         {team.map((m, i) => (
-          <Reveal key={m.name} delay={i * 0.08} as="article">
+          <Reveal key={m.name} delay={(i % 5) * 0.06} as="article">
             <div>
               <Photo tone={m.tone} grade={false} className="aspect-[4/5]" rounded="rounded-xl">
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-display text-6xl text-surface/90 text-shadow-soft">
-                    {initials(m.name)}
-                  </span>
+                  <span className="font-display text-5xl text-ink/70">{initials(m.name)}</span>
                 </div>
               </Photo>
-              <div className="mt-4">
-                <h2 className="font-display text-xl">{m.name}</h2>
-                <p className="mt-1 text-sm text-muted">{m.role}</p>
+              <div className="mt-3">
+                <h2 className="font-display text-lg">{m.name}</h2>
+                <p className="mt-0.5 text-sm text-muted">{m.role}</p>
               </div>
             </div>
           </Reveal>
@@ -50,15 +50,13 @@ export default function AboutPage() {
         <Reveal>
           <div className="max-w-prose text-lg leading-relaxed text-ink/85">
             <p>
-              We believe the best celebrations feel personal, not mass-produced.
-              Because we&apos;re a small team making everything by hand, we take a
-              limited number of events each weekend — so every piece gets the care
-              it deserves.
+              We believe the best celebrations feel personal, not mass-produced. Because we make
+              everything by hand around our families and shifts, we take a limited number of events —
+              so every backdrop, table and balloon gets the care it deserves.
             </p>
             <p className="mt-5">
-              That&apos;s also why we ask for your event date early: it lets us be
-              honest about what we can create beautifully in time, rather than
-              overpromising.
+              That&apos;s also why we ask for your event date early: it lets us be honest about what we
+              can create beautifully in time, rather than overpromising.
             </p>
           </div>
         </Reveal>

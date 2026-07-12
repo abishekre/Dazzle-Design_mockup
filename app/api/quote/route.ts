@@ -1,30 +1,18 @@
 import { NextResponse } from "next/server";
+import { getSupabaseAdmin } from "@/lib/supabase";
+import { notifyTeam, type QuoteData } from "@/lib/notify";
 
-// Stub endpoint for the Request-a-Quote form.
+// Request-a-Quote endpoint.
 //
-// TODO (Phase 1 backend): replace the console.log with:
-//   1. insert into Supabase `quote_requests`
-//   2. Resend email (customer confirmation + team alert)
-//   3. Discord/Slack webhook ping for instant team notification
-// See plan Part 3. Keep the same request/response shape so the form is untouched.
+// When configured (see .env.example) it: (1) inserts into Supabase
+// `quote_requests`, and (2) notifies the team via Resend email + optional
+// webhook. Without env it still validates and logs, so the form works in dev
+// and never hard-fails on the customer.
 
 const MIN_LEAD_DAYS = 7;
 
-type QuotePayload = {
-  name?: string;
-  email?: string;
-  phone?: string;
-  eventType?: string;
-  eventDate?: string;
-  guests?: string;
-  budget?: string;
-  area?: string;
-  item?: string;
-  message?: string;
-};
-
 export async function POST(req: Request) {
-  let body: QuotePayload;
+  let body: QuoteData;
   try {
     body = await req.json();
   } catch {
@@ -45,13 +33,37 @@ export async function POST(req: Request) {
       errors.eventDate = `We need at least ${MIN_LEAD_DAYS} days' notice.`;
     }
   }
-
   if (Object.keys(errors).length > 0) {
     return NextResponse.json({ ok: false, errors }, { status: 422 });
   }
 
-  // Placeholder for real persistence + notifications.
-  console.log("[quote_request]", JSON.stringify(body));
+  // 1. Persist (best-effort — don't fail the customer if the DB hiccups)
+  const supabase = getSupabaseAdmin();
+  if (supabase) {
+    const { error } = await supabase.from("quote_requests").insert({
+      name: body.name,
+      email: body.email,
+      phone: body.phone || null,
+      event_type: body.eventType || null,
+      event_date: body.eventDate || null,
+      guests: body.guests || null,
+      budget: body.budget || null,
+      area: body.area || null,
+      item: body.item || null,
+      message: body.message || null,
+      status: "new",
+    });
+    if (error) console.error("[quote_request] insert failed:", error.message);
+  } else {
+    console.log("[quote_request] (no DB configured)", JSON.stringify(body));
+  }
+
+  // 2. Notify the team (email + webhook, best-effort)
+  try {
+    await notifyTeam(body);
+  } catch (e) {
+    console.error("[quote_request] notify failed:", e);
+  }
 
   return NextResponse.json({ ok: true });
 }

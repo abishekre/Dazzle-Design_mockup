@@ -5,23 +5,23 @@ import { useState } from "react";
 const faqs = [
   {
     q: "How far in advance should I book?",
-    a: "For candles and bouquets, a week or two is usually plenty. For custom stage decor, we recommend reaching out 3–4 weeks ahead so we can design and build it properly for your date.",
+    a: "We recommend reaching out 3–4 weeks ahead so we can design and build your setup properly for your date. Ask anyway if it's sooner — we'll always be honest about what's possible.",
   },
   {
-    q: "Do you deliver?",
-    a: "Yes — we deliver and, for stage decor, install across the city and nearby suburbs. Pickup can also be arranged for smaller items. We'll confirm details when we quote.",
+    q: "What areas do you cover?",
+    a: "We style events across Greater Houston — Stafford, Sugar Land and nearby areas in Texas. Let us know your venue when you enquire and we'll confirm.",
   },
   {
-    q: "Can everything be customized?",
-    a: "Absolutely. Colours, scents, flowers and styling can all be tailored to your palette and theme. Share your vision in the quote form and we'll take it from there.",
+    q: "What kinds of events do you decorate?",
+    a: "Communions, baptisms, birthdays, baby showers, gender reveals, weddings and haldi, graduations, housewarmings, Onam and more — plus custom balloon work for any celebration.",
   },
   {
     q: "How does pricing work?",
-    a: "Candles and bouquets have set starting prices in the shop. Stage decor is quoted per event, based on scale, materials and install. You'll always get a clear quote before committing.",
+    a: "Every event is quoted individually, based on the occasion, scale, materials and install. You'll always get a clear quote before committing — no surprises.",
   },
   {
-    q: "What if my date is very soon?",
-    a: "Because we're a small team taking limited events each weekend, very short notice isn't always possible — but ask anyway. If we can't, we'll tell you honestly rather than rush the work.",
+    q: "Can everything be customized?",
+    a: "Absolutely. Colours, florals, backdrops and balloons are all tailored to your palette and theme. Share your vision in the quote form and we'll take it from there.",
   },
 ];
 

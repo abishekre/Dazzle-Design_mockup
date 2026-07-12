@@ -16,10 +16,10 @@
       "static/chunks/main-app.js",
       "static/chunks/app/template.js"
     ],
-    "/faq/page": [
+    "/quote/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/faq/page.js"
+      "static/chunks/app/quote/page.js"
     ]
   }
 }
