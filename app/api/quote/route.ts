@@ -2,12 +2,16 @@ import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { notifyTeam, type QuoteData } from "@/lib/notify";
 
-// Request-a-Quote endpoint.
+// Request-a-Quote endpoint — shared by event decor and the candle shop.
+//
+// `body.channel` ("event" | "candle") tells notifyTeam which recipient set to
+// use — the candle line is run independently by one team member and must
+// never reach the shared event-decor inbox/WhatsApp, and vice versa.
 //
 // When configured (see .env.example) it: (1) inserts into Supabase
-// `quote_requests`, and (2) notifies the team via Resend email + optional
-// webhook. Without env it still validates and logs, so the form works in dev
-// and never hard-fails on the customer.
+// `quote_requests`, and (2) notifies the right person via Resend email +
+// WhatsApp + optional webhook. Without env it still validates and logs, so
+// the form works in dev and never hard-fails on the customer.
 
 const MIN_LEAD_DAYS = 7;
 
@@ -41,6 +45,7 @@ export async function POST(req: Request) {
   const supabase = getSupabaseAdmin();
   if (supabase) {
     const { error } = await supabase.from("quote_requests").insert({
+      channel: body.channel || "event",
       name: body.name,
       email: body.email,
       phone: body.phone || null,

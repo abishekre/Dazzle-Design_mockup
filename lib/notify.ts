@@ -1,7 +1,10 @@
 import { Resend } from "resend";
 import { site } from "./site";
 
+export type Channel = "event" | "candle";
+
 export type QuoteData = {
+  channel?: Channel;
   name: string;
   email: string;
   phone?: string;
@@ -17,14 +20,16 @@ export type QuoteData = {
 };
 
 /**
- * Notify the team of a new quote request via WhatsApp + Resend email + an
- * optional Discord/Slack webhook. All best-effort: failures are logged but
- * never block the customer's submission.
+ * Notify the right person about a new quote request, via WhatsApp + Resend
+ * email + an optional Discord/Slack webhook. All best-effort: failures are
+ * logged but never block the customer's submission.
  *
- * Env (see .env.example):
- *   WHATSAPP_NOTIFY_RECIPIENTS                          (WhatsApp, via CallMeBot)
- *   RESEND_API_KEY, QUOTE_NOTIFY_TO, QUOTE_NOTIFY_FROM   (email)
- *   TEAM_WEBHOOK_URL                                     (Discord/Slack)
+ * Two independent recipient channels, because the candle line is run by one
+ * team member on her own — her enquiries should never land in the shared
+ * event-decor inbox/WhatsApp, and vice versa:
+ *   channel "event"  → WHATSAPP_NOTIFY_RECIPIENTS,  QUOTE_NOTIFY_TO   (the team)
+ *   channel "candle" → CANDLE_WHATSAPP_RECIPIENTS,  CANDLE_NOTIFY_TO  (candles only)
+ * See .env.example for the full list of env vars.
  */
 export async function notifyTeam(data: QuoteData): Promise<void> {
   await Promise.allSettled([sendWhatsApp(data), sendEmail(data), sendWebhook(data)]);
@@ -32,7 +37,7 @@ export async function notifyTeam(data: QuoteData): Promise<void> {
 
 function summaryLines(data: QuoteData): string[] {
   return [
-    `New quote request`,
+    data.channel === "candle" ? `New candle order` : `New quote request`,
     `${data.name} · ${data.email}${data.phone ? ` · ${data.phone}` : ""}`,
     data.eventType || data.eventDate ? `${[data.eventType, data.eventDate].filter(Boolean).join(" · ")}` : "",
     data.item ? `Item: ${data.item}${data.quantity ? ` (x${data.quantity})` : ""}` : "",
@@ -49,11 +54,12 @@ function summaryLines(data: QuoteData): string[] {
  * once: save +34 644 59 71 67, message it "I allow callmebot to send me
  * messages", and they'll reply with an apikey. See .env.example.
  *
- * WHATSAPP_NOTIFY_RECIPIENTS format: "phone:apikey,phone2:apikey2"
+ * Env format: "phone:apikey,phone2:apikey2"
  * (phone = full number with country code, no +, e.g. 15168080715)
  */
 async function sendWhatsApp(data: QuoteData) {
-  const raw = process.env.WHATSAPP_NOTIFY_RECIPIENTS;
+  const envVar = data.channel === "candle" ? "CANDLE_WHATSAPP_RECIPIENTS" : "WHATSAPP_NOTIFY_RECIPIENTS";
+  const raw = process.env[envVar];
   if (!raw) return;
 
   const text = encodeURIComponent(summaryLines(data).join("\n"));
@@ -76,8 +82,9 @@ async function sendWhatsApp(data: QuoteData) {
 
 async function sendEmail(data: QuoteData) {
   const key = process.env.RESEND_API_KEY;
-  const to = process.env.QUOTE_NOTIFY_TO;
-  const from = process.env.QUOTE_NOTIFY_FROM;
+  const isCandle = data.channel === "candle";
+  const to = isCandle ? process.env.CANDLE_NOTIFY_TO : process.env.QUOTE_NOTIFY_TO;
+  const from = (isCandle ? process.env.CANDLE_NOTIFY_FROM : process.env.QUOTE_NOTIFY_FROM) || process.env.QUOTE_NOTIFY_FROM;
   if (!key || !to || !from) return;
 
   const resend = new Resend(key);
@@ -102,13 +109,13 @@ async function sendEmail(data: QuoteData) {
     from,
     to: to.split(",").map((s) => s.trim()),
     replyTo: data.email,
-    subject: `New quote request — ${data.name}${data.eventDate ? ` · ${data.eventDate}` : ""}`,
-    html: `<h2 style="font-family:Georgia,serif;color:#2a2422">New quote request</h2><table style="font-family:system-ui;font-size:14px">${rows}</table><p style="color:#6b615a;font-size:12px">— ${site.name} website</p>`,
+    subject: `${isCandle ? "New candle order" : "New quote request"} — ${data.name}${data.eventDate ? ` · ${data.eventDate}` : ""}`,
+    html: `<h2 style="font-family:Georgia,serif;color:#2a2422">${isCandle ? "New candle order" : "New quote request"}</h2><table style="font-family:system-ui;font-size:14px">${rows}</table><p style="color:#6b615a;font-size:12px">— ${site.name} website</p>`,
   });
 }
 
 async function sendWebhook(data: QuoteData) {
-  const url = process.env.TEAM_WEBHOOK_URL;
+  const url = data.channel === "candle" ? process.env.CANDLE_WEBHOOK_URL : process.env.TEAM_WEBHOOK_URL;
   if (!url) return;
   const lines = summaryLines(data);
   // Discord expects { content }; Slack expects { text }. Send both keys.

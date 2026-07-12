@@ -98,6 +98,7 @@ export function QuoteForm() {
         )}
 
         {prefillItem && <input type="hidden" name="item" value={prefillItem} />}
+        <input type="hidden" name="channel" value={isProduct ? "candle" : "event"} />
 
         {/* Pricing context when arriving from the shop */}
         {isProduct && (
@@ -105,7 +106,8 @@ export function QuoteForm() {
             <div>
               <p className="text-sm font-semibold text-ink">{prefillItem}</p>
               <p className="text-xs text-muted">
-                Starting price: {prefillPrice} · final price may vary with customization
+                Starting price: {prefillPrice} · final price may vary with customization. Candle
+                orders are handled directly by our candle maker.
               </p>
             </div>
             <span className="shrink-0 font-display text-lg text-primary-strong">{prefillPrice}</span>

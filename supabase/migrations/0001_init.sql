@@ -16,6 +16,7 @@ create table if not exists public.profiles (
 -- =========================================================================
 create table if not exists public.quote_requests (
   id uuid primary key default gen_random_uuid(),
+  channel text not null default 'event' check (channel in ('event', 'candle')),
   name text not null,
   email text not null,
   phone text,
