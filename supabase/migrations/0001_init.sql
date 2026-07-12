@@ -25,6 +25,8 @@ create table if not exists public.quote_requests (
   budget text,
   area text,
   item text,
+  quantity text,
+  checklist text[],
   message text,
   status text not null default 'new' check (status in ('new','sourcing','building','ready','archived')),
   internal_notes text,

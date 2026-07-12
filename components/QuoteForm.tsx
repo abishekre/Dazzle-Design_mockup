@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { SparkIcon } from "./icons";
-import { eventTypes } from "@/lib/site";
+import { eventTypes, checklistItems } from "@/lib/site";
 
 const MIN_LEAD_DAYS = 7;
 
@@ -16,6 +16,8 @@ const label = "block text-sm font-semibold text-ink";
 export function QuoteForm() {
   const params = useSearchParams();
   const prefillItem = params.get("item") ?? "";
+  const prefillPrice = params.get("price") ?? "";
+  const isProduct = Boolean(prefillPrice); // arrived from the shop, not an occasion
   const reduce = useReducedMotion();
 
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
@@ -34,7 +36,9 @@ export function QuoteForm() {
     setErrors({});
 
     const fd = new FormData(e.currentTarget);
-    const payload = Object.fromEntries(fd.entries());
+    const checklist = fd.getAll("checklist") as string[];
+    fd.delete("checklist");
+    const payload = { ...Object.fromEntries(fd.entries()), checklist };
 
     try {
       const res = await fetch("/api/quote", {
@@ -71,8 +75,8 @@ export function QuoteForm() {
             </div>
             <h2 className="mt-5 font-display text-3xl">Thank you!</h2>
             <p className="mx-auto mt-3 max-w-md text-muted">
-              Your request is in. One of the three of us will get back to you soon —
-              usually within a day — to talk through your event.
+              Your request is in. Our team will get back to you soon — usually within a day — to talk
+              through your {isProduct ? "order" : "event"}.
             </p>
           </div>
         </motion.div>
@@ -93,6 +97,21 @@ export function QuoteForm() {
           </p>
         )}
 
+        {prefillItem && <input type="hidden" name="item" value={prefillItem} />}
+
+        {/* Pricing context when arriving from the shop */}
+        {isProduct && (
+          <div className="flex items-center justify-between gap-3 rounded-lg bg-surface-2 px-4 py-3">
+            <div>
+              <p className="text-sm font-semibold text-ink">{prefillItem}</p>
+              <p className="text-xs text-muted">
+                Starting price: {prefillPrice} · final price may vary with customization
+              </p>
+            </div>
+            <span className="shrink-0 font-display text-lg text-primary-strong">{prefillPrice}</span>
+          </div>
+        )}
+
         <div className="grid gap-5 sm:grid-cols-2">
           <Field id="name" label="Your name" error={errors.name} required>
             <input id="name" name="name" className={field} placeholder="First & last" autoComplete="name" />
@@ -106,20 +125,26 @@ export function QuoteForm() {
           <Field id="phone" label="Phone / WhatsApp" hint="Optional">
             <input id="phone" name="phone" className={field} placeholder="For quicker replies" autoComplete="tel" />
           </Field>
-          <Field id="eventType" label="Event type">
-            <select id="eventType" name="eventType" className={field} defaultValue="">
-              <option value="" disabled>Choose one…</option>
-              {eventTypes.map((t) => (
-                <option key={t}>{t}</option>
-              ))}
-            </select>
-          </Field>
+          {isProduct ? (
+            <Field id="quantity" label="Quantity" hint="Optional">
+              <input id="quantity" name="quantity" inputMode="numeric" className={field} placeholder="e.g. 2" defaultValue="1" />
+            </Field>
+          ) : (
+            <Field id="eventType" label="Event type">
+              <select id="eventType" name="eventType" className={field} defaultValue="">
+                <option value="" disabled>Choose one…</option>
+                {eventTypes.map((t) => (
+                  <option key={t}>{t}</option>
+                ))}
+              </select>
+            </Field>
+          )}
         </div>
 
         <div className="grid gap-5 sm:grid-cols-2">
           <Field
             id="eventDate"
-            label="Event date"
+            label={isProduct ? "Needed by" : "Event date"}
             error={errors.eventDate}
             hint={`We need at least ${MIN_LEAD_DAYS} days' notice`}
             required
@@ -147,6 +172,33 @@ export function QuoteForm() {
           </Field>
         </div>
 
+        {/* Checklist — cuts down on back-and-forth about what the venue already provides */}
+        {!isProduct && (
+          <div>
+            <div className="mb-1.5">
+              <span className={label}>What would you like us to include?</span>
+              <p className="mt-0.5 text-xs text-muted">
+                We&apos;ll plan on everything checked below — uncheck anything your venue already
+                provides (some halls have their own chair covers, for instance).
+              </p>
+            </div>
+            <div className="grid grid-cols-2 gap-x-4 gap-y-2 rounded-lg border border-border bg-bg/60 p-4 sm:grid-cols-3">
+              {checklistItems.map((item) => (
+                <label key={item} className="flex items-start gap-2 text-sm text-ink/85">
+                  <input
+                    type="checkbox"
+                    name="checklist"
+                    value={item}
+                    defaultChecked
+                    className="mt-0.5 h-4 w-4 shrink-0 rounded border-border text-primary accent-primary focus:ring-primary/25"
+                  />
+                  {item}
+                </label>
+              ))}
+            </div>
+          </div>
+        )}
+
         <Field id="message" label="Tell us about your vision" hint="Colours, theme, must-haves">
           <textarea
             id="message"
@@ -154,7 +206,6 @@ export function QuoteForm() {
             rows={4}
             className={`${field} resize-y`}
             placeholder="What are you dreaming up?"
-            defaultValue={prefillItem ? `I'm interested in: ${prefillItem}. ` : ""}
           />
         </Field>
 

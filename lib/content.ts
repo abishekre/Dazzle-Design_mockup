@@ -126,6 +126,51 @@ export const occasions: Occasion[] = [
   },
 ];
 
+// Candles — the first sellable product line. No real photography yet, so
+// each item uses a hand-drawn illustration (see components/CandleArt.tsx)
+// instead of a stock/AI photo. Prices are honest starting points: final price
+// depends on customization (scent, colour, quantity) and is always confirmed
+// once we check availability for the date.
+export type Candle = {
+  id: string;
+  name: string;
+  blurb: string;
+  priceLabel: string;
+  variant: "pillar" | "jar" | "taper";
+  tone: Tone;
+};
+
+export const candles: Candle[] = [
+  {
+    id: "soy-pillar",
+    name: "Soy Pillar Candle",
+    blurb: "Clean-burning, unscented soy pillar in warm ivory. A simple, elegant staple for any table.",
+    priceLabel: "From $12",
+    variant: "pillar",
+    tone: "ivory",
+  },
+  {
+    id: "scented-jar",
+    name: "Scented Jar Candle",
+    blurb: "Hand-poured in a reusable glass jar. Choose a scent — vanilla, rose, or sandalwood.",
+    priceLabel: "From $18",
+    variant: "jar",
+    tone: "gold",
+  },
+  {
+    id: "taper-pair",
+    name: "Taper Candle Pair",
+    blurb: "A slim, elegant pair for centerpieces or altar tables. Ivory or gold.",
+    priceLabel: "From $10",
+    variant: "taper",
+    tone: "blush",
+  },
+];
+
+export function getCandle(id: string): Candle | undefined {
+  return candles.find((c) => c.id === id);
+}
+
 export function getOccasion(id: string): Occasion | undefined {
   return occasions.find((o) => o.id === id);
 }

@@ -4,7 +4,7 @@ import { occasions } from "@/lib/content";
 const base = process.env.NEXT_PUBLIC_SITE_URL ?? "https://dazzledesigns.example";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = ["", "/services", "/portfolio", "/about", "/faq", "/quote"].map((path) => ({
+  const routes = ["", "/services", "/shop", "/portfolio", "/about", "/faq", "/quote"].map((path) => ({
     url: `${base}${path}`,
     lastModified: new Date(),
     changeFrequency: "weekly" as const,

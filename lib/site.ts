@@ -19,6 +19,7 @@ export const site = {
 
 export const nav = [
   { href: "/services", label: "What we do" },
+  { href: "/shop", label: "Shop" },
   { href: "/portfolio", label: "Gallery" },
   { href: "/about", label: "About" },
   { href: "/faq", label: "How it works" },
@@ -36,6 +37,20 @@ export const eventTypes = [
   "Housewarming",
   "Onam",
   "Other",
+] as const;
+
+// Common decor add-ons, shown as a checklist on the quote form (checked by
+// default — the customer unchecks anything their venue already covers, e.g.
+// a hall with its own nice chair covers). Cuts down on back-and-forth.
+export const checklistItems = [
+  "Backdrop or arch",
+  "Balloon garland / installation",
+  "Chair covers & sashes",
+  "Table centerpieces",
+  "Cake / dessert table styling",
+  "Entrance decor",
+  "Fairy lights",
+  "Welcome sign",
 ] as const;
 
 export function whatsappLink(message?: string) {

@@ -50,6 +50,8 @@ export async function POST(req: Request) {
       budget: body.budget || null,
       area: body.area || null,
       item: body.item || null,
+      quantity: body.quantity || null,
+      checklist: body.checklist?.length ? body.checklist : null,
       message: body.message || null,
       status: "new",
     });

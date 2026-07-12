@@ -88,7 +88,7 @@ export function Footer() {
           <p>
             © {new Date().getFullYear()} {site.name}. Handmade with care.
           </p>
-          <p>Communions · Weddings · Balloon Work &amp; More</p>
+          <p>Event Decor · Candles &amp; More</p>
         </div>
       </div>
     </footer>
