@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { SparkIcon } from "./icons";
-import { eventTypes, checklistItems } from "@/lib/site";
+import { eventTypes, checklistItems, shop } from "@/lib/site";
 
 const MIN_LEAD_DAYS = 7;
 
@@ -98,7 +98,7 @@ export function QuoteForm() {
         )}
 
         {prefillItem && <input type="hidden" name="item" value={prefillItem} />}
-        <input type="hidden" name="channel" value={isProduct ? "candle" : "event"} />
+        <input type="hidden" name="channel" value={isProduct ? "shop" : "event"} />
 
         {/* Pricing context when arriving from the shop */}
         {isProduct && (
@@ -106,8 +106,8 @@ export function QuoteForm() {
             <div>
               <p className="text-sm font-semibold text-ink">{prefillItem}</p>
               <p className="text-xs text-muted">
-                Starting price: {prefillPrice} · final price may vary with customization. Candle
-                orders are handled directly by our candle maker.
+                Starting price: {prefillPrice} · final price may vary with customization. {shop.name}{" "}
+                orders are handled directly by {shop.by}.
               </p>
             </div>
             <span className="shrink-0 font-display text-lg text-primary-strong">{prefillPrice}</span>

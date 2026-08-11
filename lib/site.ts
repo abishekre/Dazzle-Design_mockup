@@ -17,6 +17,18 @@ export const site = {
   },
 };
 
+// My Floral — the shop line, run independently by Celin. Same site/theme,
+// separate contact so her orders reach her directly (see lib/notify.ts).
+export const shop = {
+  name: "My Floral",
+  by: "Celin",
+  // Assumed US country code (+1) to match the number format used elsewhere on
+  // the site — confirm this is correct.
+  whatsappNumber: "12819228650",
+  // TODO: paste the real @handle/URL once given — never guessing a social link.
+  instagram: "",
+};
+
 export const nav = [
   { href: "/services", label: "What we do" },
   { href: "/shop", label: "Shop" },
@@ -46,14 +58,17 @@ export const checklistItems = [
   "Backdrop or arch",
   "Balloon garland / installation",
   "Chair covers & sashes",
+  "Table cloth",
   "Table centerpieces",
   "Cake / dessert table styling",
+  "Gift table",
+  "Return gifts / favors table",
   "Entrance decor",
   "Fairy lights",
   "Welcome sign",
 ] as const;
 
-export function whatsappLink(message?: string) {
-  const base = `https://wa.me/${site.whatsappNumber}`;
+export function whatsappLink(message?: string, number: string = site.whatsappNumber) {
+  const base = `https://wa.me/${number}`;
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }

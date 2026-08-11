@@ -121,7 +121,7 @@ export default function HomePage() {
           <div className="relative overflow-hidden rounded-2xl bg-ink px-6 py-16 text-center sm:px-12 sm:py-24">
             <div className="absolute inset-0" style={{ backgroundImage: "radial-gradient(80% 120% at 10% 0%, rgba(216,180,92,0.28), transparent 55%), radial-gradient(90% 120% at 100% 100%, rgba(216,180,92,0.18), transparent 55%)" }} aria-hidden />
             <div className="relative">
-              <LogoMark className="mx-auto h-10 w-10 text-accent" />
+              <LogoMark className="mx-auto h-10 w-10" />
               <h2 className="mx-auto mt-5 max-w-2xl font-display text-[2.2rem] leading-[1.03] text-white sm:text-6xl">Planning something special?</h2>
               <p className="mx-auto mt-5 max-w-md text-white/80">Tell us your date and vision and we&apos;ll design decor made just for you.</p>
               <div className="mt-9 flex flex-wrap justify-center gap-3">

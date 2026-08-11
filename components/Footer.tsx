@@ -8,11 +8,26 @@ export function Footer() {
       <div className="container-content grid gap-10 py-14 sm:grid-cols-2 sm:py-16 lg:grid-cols-[1.4fr_1fr_1fr] lg:py-20">
         <div>
           <div className="flex items-center gap-2.5 font-display text-xl font-medium text-white">
-            <LogoMark className="h-9 w-9 shrink-0 text-accent" />
+            <LogoMark className="h-9 w-9 shrink-0" />
             {site.name}
           </div>
           <p className="mt-4 max-w-xs text-sm text-white/60">{site.subtitle}</p>
           <p className="mt-3 text-sm text-white/60">{site.serviceArea}</p>
+
+          <a
+            href={site.socials.instagram}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-3 rounded-lg bg-surface p-2 pr-4 transition-opacity hover:opacity-90"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/instagram-qr.svg" alt="" width={56} height={56} className="h-14 w-14 shrink-0 rounded bg-white" />
+            <span className="text-xs leading-snug text-ink/70">
+              Scan to follow us
+              <br />
+              <span className="font-semibold text-ink">@dazz_ledesigns</span>
+            </span>
+          </a>
         </div>
 
         <nav aria-label="Footer">

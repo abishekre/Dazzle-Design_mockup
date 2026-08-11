@@ -44,7 +44,7 @@ export function Header() {
           className="flex items-center gap-2.5 font-display text-lg font-medium tracking-tight text-ink sm:text-xl"
           onClick={() => setOpen(false)}
         >
-          <LogoMark className="h-8 w-8 shrink-0 text-primary-strong sm:h-9 sm:w-9" />
+          <LogoMark className="h-8 w-8 shrink-0 sm:h-9 sm:w-9" />
           {site.name}
         </Link>
 

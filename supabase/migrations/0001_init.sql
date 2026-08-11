@@ -1,5 +1,6 @@
 -- Dazzle Design — initial schema (MVP: showcase + leads)
 -- Apply with the Supabase CLI (`supabase db push`) or paste into the SQL editor.
+-- Not active yet — see lib/supabase.ts (returns null until env is configured).
 
 -- =========================================================================
 -- profiles: customer vs admin role gating (mirrors auth.users)
@@ -12,11 +13,12 @@ create table if not exists public.profiles (
 );
 
 -- =========================================================================
--- quote_requests: the core lead-capture table
+-- quote_requests: the core lead-capture table. `channel` splits event-decor
+-- requests (the team) from My Floral shop orders (Celin) — see lib/notify.ts.
 -- =========================================================================
 create table if not exists public.quote_requests (
   id uuid primary key default gen_random_uuid(),
-  channel text not null default 'event' check (channel in ('event', 'candle')),
+  channel text not null default 'event' check (channel in ('event', 'shop')),
   name text not null,
   email text not null,
   phone text,
@@ -46,42 +48,11 @@ create table if not exists public.subscribers (
 );
 
 -- =========================================================================
--- products & portfolio_items (currently static in the app; DB-ready for the
--- admin CMS). alt_text is NOT NULL so images always ship accessible.
--- =========================================================================
-create table if not exists public.products (
-  id text primary key,
-  name text not null,
-  category text not null check (category in ('candles','bouquets','stage-decor')),
-  price_label text,
-  blurb text,
-  image_url text,
-  alt_text text not null default '',
-  custom boolean not null default false,
-  sort_order int not null default 0,
-  published boolean not null default true,
-  created_at timestamptz not null default now()
-);
-
-create table if not exists public.portfolio_items (
-  id uuid primary key default gen_random_uuid(),
-  title text not null,
-  event text,
-  image_url text,
-  alt_text text not null default '',
-  sort_order int not null default 0,
-  published boolean not null default true,
-  created_at timestamptz not null default now()
-);
-
--- =========================================================================
 -- Row Level Security
 -- =========================================================================
 alter table public.profiles enable row level security;
 alter table public.quote_requests enable row level security;
 alter table public.subscribers enable row level security;
-alter table public.products enable row level security;
-alter table public.portfolio_items enable row level security;
 
 -- helper: is the current user an admin?
 create or replace function public.is_admin() returns boolean
@@ -109,14 +80,3 @@ drop policy if exists "subscribers public insert" on public.subscribers;
 create policy "subscribers public insert" on public.subscribers for insert with check (true);
 drop policy if exists "subscribers admin read" on public.subscribers;
 create policy "subscribers admin read" on public.subscribers for select using (public.is_admin());
-
--- products / portfolio: public reads published rows; admins manage
-drop policy if exists "products public read" on public.products;
-create policy "products public read" on public.products for select using (published or public.is_admin());
-drop policy if exists "products admin write" on public.products;
-create policy "products admin write" on public.products for all using (public.is_admin()) with check (public.is_admin());
-
-drop policy if exists "portfolio public read" on public.portfolio_items;
-create policy "portfolio public read" on public.portfolio_items for select using (published or public.is_admin());
-drop policy if exists "portfolio admin write" on public.portfolio_items;
-create policy "portfolio admin write" on public.portfolio_items for all using (public.is_admin()) with check (public.is_admin());

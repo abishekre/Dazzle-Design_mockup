@@ -126,24 +126,37 @@ export const occasions: Occasion[] = [
   },
 ];
 
-// Candles — the first sellable product line. No real photography yet, so
-// each item uses a hand-drawn illustration (see components/CandleArt.tsx)
-// instead of a stock/AI photo. Prices are honest starting points: final price
-// depends on customization (scent, colour, quantity) and is always confirmed
-// once we check availability for the date.
-export type Candle = {
+// My Floral — the shop line, made and run by Celin. No real photography yet,
+// so each item uses a hand-drawn illustration (see components/ShopArt.tsx)
+// instead of a stock/AI photo. Prices below are PLACEHOLDER starting points —
+// Celin should confirm/adjust real numbers. Final price always depends on
+// customization and is confirmed once availability is checked for the date.
+export type ShopCategory = "candles" | "bouquets" | "boutonnieres" | "balloons" | "leis";
+
+export type ShopItem = {
   id: string;
   name: string;
+  category: ShopCategory;
   blurb: string;
   priceLabel: string;
-  variant: "pillar" | "jar" | "taper";
+  variant: import("@/components/ShopArt").ArtVariant;
   tone: Tone;
+  customizable?: boolean;
 };
 
-export const candles: Candle[] = [
+export const shopCategoryLabels: Record<ShopCategory, string> = {
+  candles: "Candles",
+  bouquets: "Bouquets",
+  boutonnieres: "Boutonnieres",
+  balloons: "Balloon Clusters",
+  leis: "Graduation Leis",
+};
+
+export const shopItems: ShopItem[] = [
   {
     id: "soy-pillar",
     name: "Soy Pillar Candle",
+    category: "candles",
     blurb: "Clean-burning, unscented soy pillar in warm ivory. A simple, elegant staple for any table.",
     priceLabel: "From $12",
     variant: "pillar",
@@ -152,23 +165,66 @@ export const candles: Candle[] = [
   {
     id: "scented-jar",
     name: "Scented Jar Candle",
+    category: "candles",
     blurb: "Hand-poured in a reusable glass jar. Choose a scent — vanilla, rose, or sandalwood.",
     priceLabel: "From $18",
     variant: "jar",
     tone: "gold",
+    customizable: true,
   },
   {
     id: "taper-pair",
     name: "Taper Candle Pair",
+    category: "candles",
     blurb: "A slim, elegant pair for centerpieces or altar tables. Ivory or gold.",
     priceLabel: "From $10",
     variant: "taper",
     tone: "blush",
   },
+  {
+    id: "fresh-bouquet",
+    name: "Fresh Seasonal Bouquet",
+    category: "bouquets",
+    blurb: "Hand-tied with whatever's freshest and prettiest that week. Tell us your colours.",
+    priceLabel: "From $45",
+    variant: "bouquet",
+    tone: "blush",
+    customizable: true,
+  },
+  {
+    id: "boutonniere",
+    name: "Boutonniere",
+    category: "boutonnieres",
+    blurb: "A single pinned bloom for the groom, groomsmen, or a proud parent.",
+    priceLabel: "From $8",
+    variant: "boutonniere",
+    tone: "sage",
+    customizable: true,
+  },
+  {
+    id: "balloon-cluster",
+    name: "Balloon Cluster",
+    category: "balloons",
+    blurb: "A cheerful cluster for a doorway, chair, or gift table. Any colour combination.",
+    priceLabel: "From $25",
+    variant: "balloon-cluster",
+    tone: "sky",
+    customizable: true,
+  },
+  {
+    id: "graduation-lei",
+    name: "Graduation Lei",
+    category: "leis",
+    blurb: "A floral lei to celebrate the big day — made in your school colours.",
+    priceLabel: "From $20",
+    variant: "lei",
+    tone: "gold",
+    customizable: true,
+  },
 ];
 
-export function getCandle(id: string): Candle | undefined {
-  return candles.find((c) => c.id === id);
+export function getShopItem(id: string): ShopItem | undefined {
+  return shopItems.find((c) => c.id === id);
 }
 
 export function getOccasion(id: string): Occasion | undefined {
