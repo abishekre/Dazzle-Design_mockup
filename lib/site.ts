@@ -20,13 +20,14 @@ export const site = {
 // My Floral — the shop line, run independently by Celin. Same site/theme,
 // separate contact so her orders reach her directly (see lib/notify.ts).
 export const shop = {
+  // The Instagram handle reads "Floral Launch by Celin" — awaiting Celin's
+  // confirmation of the exact display name before changing this.
   name: "My Floral",
   by: "Celin",
   // Assumed US country code (+1) to match the number format used elsewhere on
   // the site — confirm this is correct.
   whatsappNumber: "12819228650",
-  // TODO: paste the real @handle/URL once given — never guessing a social link.
-  instagram: "",
+  instagram: "https://www.instagram.com/florallaunchbycelin/",
 };
 
 export const nav = [

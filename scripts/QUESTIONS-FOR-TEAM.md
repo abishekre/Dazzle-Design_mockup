@@ -10,24 +10,33 @@ Everything else improves it but can wait.
 
 ---
 
-## Part 1 · Copy-paste messages
+## Part 1 · The message to send Celin
 
-Two ready-to-send messages. Send in chunks if WhatsApp feels too long.
+Everything — shop **and** team details — comes through Celin, so this is one
+single message. It is long on purpose: she can answer point by point and we
+avoid five rounds of back-and-forth.
 
-### → Message for Celin
+---
 
-> Hi Celin! The website is nearly ready, and your shop section (*My Floral*) is
-> built into it — it has its own page, and **any order from it comes straight to
-> you**, not to the main Dazzle inbox.
+> Hi Celin! The website is nearly ready. Your shop is built in with its own
+> page, and **orders from it come straight to you** — by WhatsApp *and* email —
+> not to the main Dazzle inbox. I just need some real details from you, because
+> right now parts of the site use placeholders I made up.
 >
-> A few things I need from you before it goes live:
+> Could you go through these and reply with the numbers? Anything you don't
+> know yet, just skip and we'll fill it in later.
 >
-> **1.** Is "My Floral" the exact name to show? (spelling / capitals)
-> **2.** Your Instagram link for My Floral
-> **3.** The email address where you want order enquiries sent
-> **4.** Confirm your number is **+1 281 922 8650** and it's on WhatsApp
+> ---
 >
-> **5. Prices — these are placeholders I made up. Please correct them:**
+> **PART A — Your shop**
+>
+> **1.** What's the exact name to show? Your Instagram is
+> *florallaunchbycelin*, so is it **"Floral Launch by Celin"**? The site
+> currently says **"My Floral, by Celin"** — tell me which is right.
+> **2.** The **email address** where you want order enquiries sent.
+> *(Right now orders have no inbox to land in.)*
+> **3.** Confirm your number is **+1 281 922 8650** and that it's on WhatsApp.
+> **4. Prices — I invented all of these. Please correct them:**
 > • Fresh Seasonal Bouquet — from $45
 > • Soy Pillar Candle — from $12
 > • Scented Jar Candle — from $18
@@ -35,37 +44,64 @@ Two ready-to-send messages. Send in chunks if WhatsApp feels too long.
 > • Boutonniere — from $8
 > • Balloon Cluster — from $25
 > • Graduation Lei — from $20
+> **5.** Is that the right list of what you make? Anything to add or remove?
+> **6.** What scents do you actually do for the jar candles? *(I guessed
+> vanilla / rose / sandalwood.)*
+> **7.** How many days notice do you need for an order? *(Site says 7.)*
+> **8.** Do you deliver, or is it pickup only? Which areas?
+> **9.** Any photos of your actual products? Right now the site uses
+> hand-drawn illustrations because we have no real ones — photos would be the
+> single biggest improvement.
+> **10.** Are you happy to be named publicly on the page as the person behind
+> the shop?
 >
-> **6.** Is that the right list of what you make? Anything to add or remove?
-> **7.** What scents do you actually do for the jar candles? (I guessed vanilla /
-> rose / sandalwood)
-> **8.** How many days notice do you need for an order? (site says 7 right now)
-> **9.** Do you deliver, or is it pickup only? Which areas?
-> **10.** Any photos of your work? Right now the site uses hand-drawn pictures
-> because we don't have real ones.
-
-### → Message for the Dazzle Designs team
-
-> Hi all! The website is nearly ready. A few things I need before we launch:
+> ---
 >
-> **1.** Your names, and what each of you mainly handles (florals, balloons,
-> setup, etc.) — the About page has placeholders right now
-> **2.** A photo of each of you, if you're happy to be on the site (optional —
-> we can keep it text-only)
-> **3.** Confirm **516-808-0715** is the right number and it's on WhatsApp
-> **4.** Minimum notice you need for a booking? The site says **7 days**, and the
-> FAQ says **3–4 weeks** for bigger stage decor — is that right?
-> **5.** Roughly how many events have you done? (the site currently says "100+")
-> **6.** The budget options on the enquiry form are: Under $150 / $150–400 /
-> $400–900 / $900+ — do those match reality?
-> **7.** Do you deliver anywhere in Greater Houston, or only certain areas? Is
+> **PART B — The Dazzle Designs side**
+>
+> **11.** All five of your names, and what each of you mainly handles
+> (florals, balloons, setup…). The About page literally says *"Founder One,
+> Founder Two…"* at the moment.
+> **12.** Confirm **516-808-0715** is right and on WhatsApp.
+> **13.** Confirm orders should also go to **dazzledesigns77459@gmail.com**.
+> **14.** Roughly how many events have you done? The homepage currently says
+> **"100+"** — **I made that number up**, so it either needs to be true or
+> changed.
+> **15.** Minimum notice for a booking? The site says **7 days**, but the FAQ
+> says **3–4 weeks** for bigger stage decor — which is right?
+> **16.** Do the budget options match reality? Under $150 / $150–400 /
+> $400–900 / $900+
+> **17.** Do you cover all of Greater Houston, or only certain areas? Is
 > pickup an option for small things?
-> **8.** More photos please! Especially birthdays, baby showers, weddings/haldi,
-> Onam, graduations
-> **9.** Any happy customers who'd write 1–2 lines as a review? Even a WhatsApp
-> screenshot works
-> **10.** Want new enquiries to ping your phone on WhatsApp instantly? It's a
-> 2-minute setup — I'll send the steps to whoever wants it
+> **18.** On the enquiry form, customers tick what they want included:
+> backdrop/arch, balloon garland, chair covers & sashes, table cloth,
+> centerpieces, cake table, gift table, return gifts table, entrance decor,
+> fairy lights, welcome sign. **Is that the right list?**
+> **19.** More photos please — especially birthdays, baby showers,
+> weddings/haldi, Onam and graduations.
+> **20.** Any happy customers who'd write 1–2 lines as a review? A forwarded
+> WhatsApp screenshot is perfect.
+>
+> ---
+>
+> **PART C — Instant WhatsApp alerts (2 minutes, each person separately)**
+>
+> This is what makes an order buzz your phone the moment someone submits it.
+> **Each person who wants alerts does this on their own phone:**
+>
+> **Step 1.** Save this number as a contact: **+34 644 59 71 67**
+> (call it anything — "Website Alerts")
+> **Step 2.** Open WhatsApp and send *that contact* this exact message:
+> `I allow callmebot to send me messages`
+> **Step 3.** Wait for its reply — it contains a line like
+> **`apikey=1234567`**
+> **Step 4.** Send me that number and whose phone it is, like:
+> `2819228650 → 1234567`
+>
+> Do this for **you**, and for **whoever on the team** wants order alerts
+> (the number they use must be the one they message from).
+>
+> Email will work regardless — this just adds the instant phone ping.
 
 ---
 
@@ -84,8 +120,8 @@ Two ready-to-send messages. Send in chunks if WhatsApp feels too long.
 
 | # | What to ask | Why it matters |
 |---|---|---|
-| 5 | **Instagram URL** for My Floral | You asked for this but didn't send it. Button is hidden until provided — I won't guess a link. |
-| 6 | Exact **brand name** — "My Floral"? "MyFloral"? | Shows as the page title. |
+| 5 | ~~Instagram URL~~ | ✅ **Received** — instagram.com/florallaunchbycelin (live on the shop page). |
+| 6 | Exact **brand name** | 🔴 Handle says "Floral Launch by Celin"; site says "My Floral". One of them is wrong. |
 | 7 | Is the **product list** right? Add/remove? | I built it from your one-line description. |
 | 8 | Real **scent / colour options** | I invented "vanilla, rose, sandalwood". |
 | 9 | Her **lead time** — how many days notice? | Site enforces 7 days for everything. Candles may need more or less than bouquets. |

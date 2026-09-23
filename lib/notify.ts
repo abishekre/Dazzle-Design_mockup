@@ -33,7 +33,22 @@ export type QuoteData = {
  * See .env.example for the full list of env vars.
  */
 export async function notifyTeam(data: QuoteData): Promise<void> {
-  await Promise.allSettled([sendWhatsApp(data), sendEmail(data), sendWebhook(data)]);
+  // Every order goes out on BOTH channels to whichever party owns it:
+  // WhatsApp (what they actually watch) and email (the durable record they
+  // can search and reply from). Fired in parallel so one slow or broken
+  // channel never delays the other, and each failure is logged by name —
+  // a silent WhatsApp outage would otherwise look identical to success.
+  const channels: [string, Promise<void>][] = [
+    ["whatsapp", sendWhatsApp(data)],
+    ["email", sendEmail(data)],
+    ["webhook", sendWebhook(data)],
+  ];
+  const results = await Promise.allSettled(channels.map(([, p]) => p));
+  results.forEach((r, i) => {
+    if (r.status === "rejected") {
+      console.error(`[notify:${data.channel || "event"}] ${channels[i][0]} failed:`, r.reason);
+    }
+  });
 }
 
 function summaryLines(data: QuoteData): string[] {
@@ -74,11 +89,19 @@ async function sendWhatsApp(data: QuoteData) {
     })
     .filter((r) => r.phone && r.apikey);
 
-  await Promise.allSettled(
-    recipients.map(({ phone, apikey }) =>
-      fetch(`https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${apikey}`),
-    ),
+  const sent = await Promise.allSettled(
+    recipients.map(async ({ phone, apikey }) => {
+      const res = await fetch(
+        `https://api.callmebot.com/whatsapp.php?phone=${phone}&text=${text}&apikey=${apikey}`,
+      );
+      // fetch() resolves on 4xx/5xx too, so a wrong or expired apikey would
+      // look like success. Surface it instead.
+      if (!res.ok) throw new Error(`CallMeBot ${res.status} for ${phone}`);
+    }),
   );
+  sent.forEach((r) => {
+    if (r.status === "rejected") console.error("[notify] WhatsApp send failed:", r.reason);
+  });
 }
 
 async function sendEmail(data: QuoteData) {
