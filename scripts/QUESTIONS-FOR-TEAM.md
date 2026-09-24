@@ -21,6 +21,7 @@ already live on the site — this is the short follow-up list.
 | Enquiry checklist | Added "& runners", "Welcome board", "Card box" |
 | Free setup areas | Sugar Land, Missouri City, Stafford, Sienna |
 | Pickup | Available for smaller pieces |
+| WhatsApp alerts | ✅ Live to 281-922-8650 (Celin) for events *and* shop orders |
 | Lead time | 7 days minimum, 3–4 weeks for bigger stage decor (both confirmed) |
 | Team roles | "Everyone does everything" — the five fake founder names are gone |
 
@@ -44,7 +45,7 @@ WhatsApp alert now lands on Celin's phone, for both. Options:
 
 | # | What we need | Why it matters |
 |---|---|---|
-| 1 | **CallMeBot keys** — for Celin, and anyone on the team | **No WhatsApp alerts work yet.** Email is live for both. Steps in Part 2. |
+| 1 | **CallMeBot keys for anyone else** who wants alerts | ✅ Celin's key received (2819228650) and live on *both* channels — she's the only phone getting alerts. Steps in Part 2. |
 | 2 | **Photos of Celin's products** | The shop still uses hand-drawn illustrations. Biggest visual upgrade available. |
 | 3 | **Shop lead time** — days notice for an order | Question 7 was skipped. Site enforces 7 days, same as events. |
 | 4 | **The testimonials** she said yes to | Nothing social-proof on the site yet. |
