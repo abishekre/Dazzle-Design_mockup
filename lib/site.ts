@@ -1,15 +1,18 @@
-// Central place for brand + config constants. Swap these for real values when
-// the team provides them (WhatsApp number, service area, socials).
-
-// Real business details sourced from the team's Facebook/Instagram pages.
+// Central place for brand + config constants.
+// Details confirmed by the team; socials/email sourced from their Facebook page.
 export const site = {
   name: "Dazzle Designs",
   tagline: "Elevate your party with elegance",
   subtitle: "Event decor, handmade by a team of five for your celebration.",
-  phone: "+1 516-808-0715",
-  // wa.me format (digits only, incl. country code). Confirm this line is on WhatsApp.
-  whatsappNumber: "15168080715",
+  // Primary line, confirmed on WhatsApp. 516-808-0715 is the alternative.
+  phone: "+1 281-922-8650",
+  altPhone: "+1 516-808-0715",
+  // wa.me format (digits only, incl. country code).
+  whatsappNumber: "12819228650",
   serviceArea: "Event decor across Greater Houston — Stafford, Sugar Land & nearby, TX",
+  // Setup is free in these areas; elsewhere in Greater Houston a setup
+  // charge may apply. Small items can also be picked up.
+  freeSetupAreas: ["Sugar Land", "Missouri City", "Stafford", "Sienna"],
   email: "dazzledesigns77459@gmail.com",
   socials: {
     instagram: "https://www.instagram.com/dazz_ledesigns",
@@ -17,16 +20,17 @@ export const site = {
   },
 };
 
-// My Floral — the shop line, run independently by Celin. Same site/theme,
+// Floral Launch — the shop line, run independently by Celin. Same site/theme,
 // separate contact so her orders reach her directly (see lib/notify.ts).
 export const shop = {
-  // The Instagram handle reads "Floral Launch by Celin" — awaiting Celin's
-  // confirmation of the exact display name before changing this.
-  name: "My Floral",
+  name: "Floral Launch",
   by: "Celin",
-  // Assumed US country code (+1) to match the number format used elsewhere on
-  // the site — confirm this is correct.
   whatsappNumber: "12819228650",
+  // Celin's order inbox lives in SHOP_NOTIFY_TO (server-side only) — keeping
+  // a personal address out of the client bundle, where it would be scraped.
+  // Delivery only, within a 30-mile radius.
+  deliveryRadiusMiles: 30,
+  deliveryAreas: ["Sugar Land", "Missouri City", "Stafford", "Sienna"],
   instagram: "https://www.instagram.com/florallaunchbycelin/",
 };
 
@@ -59,14 +63,25 @@ export const checklistItems = [
   "Backdrop or arch",
   "Balloon garland / installation",
   "Chair covers & sashes",
-  "Table cloth",
+  "Table cloth & runners",
   "Table centerpieces",
   "Cake / dessert table styling",
   "Gift table",
   "Return gifts / favors table",
+  "Welcome board",
+  "Card box",
   "Entrance decor",
   "Fairy lights",
   "Welcome sign",
+] as const;
+
+// Budget brackets shown on the quote form — confirmed by the team.
+export const budgetRanges = [
+  "$400 – $500",
+  "$500 – $900",
+  "$900 – $1,500",
+  "$1,500+",
+  "Not sure yet",
 ] as const;
 
 export function whatsappLink(message?: string, number: string = site.whatsappNumber) {

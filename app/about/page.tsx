@@ -9,15 +9,15 @@ export const metadata: Metadata = {
   description: "Meet the five women behind Dazzle Designs — event decor near Houston.",
 };
 
-const team: { name: string; role: string; tone: Tone }[] = [
-  { name: "Founder One", role: "Design & styling", tone: "gold" },
-  { name: "Founder Two", role: "Florals", tone: "blush" },
-  { name: "Founder Three", role: "Backdrops & drapery", tone: "ivory" },
-  { name: "Founder Four", role: "Balloons", tone: "sky" },
-  { name: "Founder Five", role: "Setup & install", tone: "sage" },
+// The five of them don't split into fixed roles — everyone does every part of
+// the job — so this shows the crafts they share rather than named specialists.
+const crafts: { name: string; tone: Tone }[] = [
+  { name: "Design & styling", tone: "gold" },
+  { name: "Florals", tone: "blush" },
+  { name: "Backdrops & drapery", tone: "ivory" },
+  { name: "Balloons", tone: "sky" },
+  { name: "Setup & install", tone: "sage" },
 ];
-
-const initials = (name: string) => name.split(" ").map((w) => w[0]).join("").slice(0, 2).toUpperCase();
 
 export default function AboutPage() {
   return (
@@ -28,22 +28,25 @@ export default function AboutPage() {
         intro="Dazzle Designs is five women — mothers and nurses — who found a new creative calling. On our own time, we turn flowers, drapery and balloons into decor for celebrations across Greater Houston."
       />
 
-      <section className="container-content mt-12 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
-        {team.map((m, i) => (
-          <Reveal key={m.name} delay={(i % 5) * 0.06} as="article">
-            <div>
-              <Photo tone={m.tone} grade={false} className="aspect-[4/5]" rounded="rounded-xl">
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="font-display text-5xl text-ink/70">{initials(m.name)}</span>
+      <section className="container-content mt-12">
+        <Reveal>
+          <h2 className="font-display text-2xl sm:text-3xl">Everyone does everything</h2>
+          <p className="mt-2 max-w-prose text-muted">
+            We don&apos;t split into specialists. Between the five of us we share every part of the
+            job, from the first sketch to the last balloon on the wall.
+          </p>
+        </Reveal>
+        <div className="mt-8 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-5">
+          {crafts.map((c, i) => (
+            <Reveal key={c.name} delay={(i % 5) * 0.06} as="article">
+              <Photo tone={c.tone} grade={false} className="aspect-[4/5]" rounded="rounded-xl">
+                <div className="absolute inset-0 flex items-end p-4">
+                  <span className="font-display text-lg leading-tight text-ink/80">{c.name}</span>
                 </div>
               </Photo>
-              <div className="mt-3">
-                <h2 className="font-display text-lg">{m.name}</h2>
-                <p className="mt-0.5 text-sm text-muted">{m.role}</p>
-              </div>
-            </div>
-          </Reveal>
-        ))}
+            </Reveal>
+          ))}
+        </div>
       </section>
 
       <section className="container-content mt-16">

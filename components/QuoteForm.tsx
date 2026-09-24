@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { SparkIcon } from "./icons";
-import { eventTypes, checklistItems, shop } from "@/lib/site";
+import { eventTypes, checklistItems, budgetRanges, shop } from "@/lib/site";
 
 const MIN_LEAD_DAYS = 7;
 
@@ -162,11 +162,9 @@ export function QuoteForm() {
           <Field id="budget" label="Budget range" hint="Optional">
             <select id="budget" name="budget" className={field} defaultValue="">
               <option value="" disabled>Choose a range…</option>
-              <option>Under $150</option>
-              <option>$150 – $400</option>
-              <option>$400 – $900</option>
-              <option>$900+</option>
-              <option>Not sure yet</option>
+              {budgetRanges.map((b) => (
+                <option key={b}>{b}</option>
+              ))}
             </select>
           </Field>
           <Field id="area" label="Event location / area" hint="Optional">

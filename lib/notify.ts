@@ -24,8 +24,8 @@ export type QuoteData = {
  * email + an optional Discord/Slack webhook. All best-effort: failures are
  * logged but never block the customer's submission.
  *
- * Two independent recipient channels, because My Floral (candles, bouquets,
- * boutonnieres, balloon clusters, graduation leis) is run by Celin on her
+ * Two independent recipient channels, because Floral Launch (bouquets, candle
+ * decor, boutonnieres, balloon clusters, graduation leis) is run by Celin on her
  * own — her enquiries should never land in the shared event-decor
  * inbox/WhatsApp, and vice versa:
  *   channel "event" → WHATSAPP_NOTIFY_RECIPIENTS, QUOTE_NOTIFY_TO  (the team)

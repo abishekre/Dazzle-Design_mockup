@@ -126,7 +126,7 @@ export const occasions: Occasion[] = [
   },
 ];
 
-// My Floral — the shop line, made and run by Celin. No real photography yet,
+// Floral Launch — the shop line, made and run by Celin. No real photography yet,
 // so each item uses a hand-drawn illustration (see components/ShopArt.tsx)
 // instead of a stock/AI photo. Prices below are PLACEHOLDER starting points —
 // Celin should confirm/adjust real numbers. Final price always depends on
@@ -144,51 +144,25 @@ export type ShopItem = {
   customizable?: boolean;
 };
 
-export const shopCategoryLabels: Record<ShopCategory, string> = {
-  candles: "Candles",
-  bouquets: "Bouquets",
-  boutonnieres: "Boutonnieres",
-  balloons: "Balloon Clusters",
-  leis: "Graduation Leis",
-};
-
 export const shopItems: ShopItem[] = [
   {
-    id: "soy-pillar",
-    name: "Soy Pillar Candle",
-    category: "candles",
-    blurb: "Clean-burning, unscented soy pillar in warm ivory. A simple, elegant staple for any table.",
-    priceLabel: "From $12",
-    variant: "pillar",
-    tone: "ivory",
-  },
-  {
-    id: "scented-jar",
-    name: "Scented Jar Candle",
-    category: "candles",
-    blurb: "Hand-poured in a reusable glass jar. Choose a scent — vanilla, rose, or sandalwood.",
-    priceLabel: "From $18",
-    variant: "jar",
-    tone: "gold",
-    customizable: true,
-  },
-  {
-    id: "taper-pair",
-    name: "Taper Candle Pair",
-    category: "candles",
-    blurb: "A slim, elegant pair for centerpieces or altar tables. Ivory or gold.",
-    priceLabel: "From $10",
-    variant: "taper",
-    tone: "blush",
-  },
-  {
-    id: "fresh-bouquet",
-    name: "Fresh Seasonal Bouquet",
+    id: "seasonal-bouquet",
+    name: "Fresh or Artificial Seasonal Bouquet",
     category: "bouquets",
-    blurb: "Hand-tied with whatever's freshest and prettiest that week. Tell us your colours.",
+    blurb: "Hand-tied in fresh or artificial blooms — whichever suits the day. Tell us your colours.",
     priceLabel: "From $45",
     variant: "bouquet",
     tone: "blush",
+    customizable: true,
+  },
+  {
+    id: "candle-decor",
+    name: "Candle Decor",
+    category: "candles",
+    blurb: "Candle styling for tables, altars and mantels, finished to match your palette.",
+    priceLabel: "From $20",
+    variant: "pillar",
+    tone: "ivory",
     customizable: true,
   },
   {
@@ -206,7 +180,7 @@ export const shopItems: ShopItem[] = [
     name: "Balloon Cluster",
     category: "balloons",
     blurb: "A cheerful cluster for a doorway, chair, or gift table. Any colour combination.",
-    priceLabel: "From $25",
+    priceLabel: "From $35",
     variant: "balloon-cluster",
     tone: "sky",
     customizable: true,

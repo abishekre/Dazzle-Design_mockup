@@ -9,7 +9,11 @@ const faqs = [
   },
   {
     q: "What areas do you cover?",
-    a: "We style events across Greater Houston — Stafford, Sugar Land and nearby areas in Texas. Let us know your venue when you enquire and we'll confirm.",
+    a: "We style events across Greater Houston. Setup is free in Sugar Land, Missouri City, Stafford and Sienna; a little further out we'll confirm any setup charge with your quote. Tell us your venue when you enquire.",
+  },
+  {
+    q: "Do you deliver, or can I pick up?",
+    a: "We deliver and set up for events. For smaller pieces, pickup is an option — just say so in your request and we'll arrange a time.",
   },
   {
     q: "What kinds of events do you decorate?",

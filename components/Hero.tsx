@@ -63,7 +63,7 @@ export function Hero() {
           </motion.div>
 
           <motion.div {...rise(0.32)} className="mt-8 flex items-center gap-5 text-sm text-muted">
-            <span className="font-display text-2xl text-ink">100+</span>
+            <span className="font-display text-2xl text-ink">60+</span>
             <span className="max-w-[16rem] leading-snug">
               celebrations styled across Stafford, Sugar Land &amp; nearby, TX
             </span>

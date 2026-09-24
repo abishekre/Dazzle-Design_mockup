@@ -4,7 +4,7 @@ export type ArtVariant = "pillar" | "jar" | "taper" | "bouquet" | "boutonniere" 
 
 /**
  * Hand-drawn shop illustrations — used in place of real product photography,
- * which doesn't exist yet for My Floral's line. Deliberately illustrative
+ * which doesn't exist yet for Floral Launch's line. Deliberately illustrative
  * (not a stock-photo pastiche) so it reads as an intentional design choice.
  * Sits on the same warm gradient tiles used elsewhere on the site.
  */

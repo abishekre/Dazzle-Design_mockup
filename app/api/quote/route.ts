@@ -2,10 +2,10 @@ import { NextResponse } from "next/server";
 import { getSupabaseAdmin } from "@/lib/supabase";
 import { notifyTeam, type QuoteData } from "@/lib/notify";
 
-// Request-a-Quote endpoint — shared by event decor and the My Floral shop.
+// Request-a-Quote endpoint — shared by event decor and the Floral Launch shop.
 //
 // `body.channel` ("event" | "shop") tells notifyTeam which recipient set to
-// use — My Floral is run independently by Celin and must never reach the
+// use — Floral Launch is run independently by Celin and must never reach the
 // shared event-decor inbox/WhatsApp, and vice versa.
 //
 // When configured (see .env.example) it: (1) inserts into Supabase
