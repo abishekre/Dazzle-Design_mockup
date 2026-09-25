@@ -27,6 +27,21 @@
   --lead-red: 192 73 47;      /* #c0492f */
 }
 
+/* ------------------------------------------------------------
+   Floral Launch by Celin — her own identity, same foundations.
+   Applied by app/(floral)/layout.tsx. Only the accent family changes:
+   gold → dusty rose, so her pages read as a sibling brand rather than a
+   Dazzle sub-page, while keeping the ivory ground and the type scale.
+   --primary-strong is AA on ivory (5.7:1) for small text.
+   ------------------------------------------------------------ */
+.theme-floral {
+  --surface-2: 245 235 233;    /* #f5ebe9 blush champagne */
+  --primary: 176 120 118;      /* #b07876 dusty rose */
+  --primary-strong: 138 82 82; /* #8a5252 AA-safe rose for small text */
+  --accent: 209 160 152;       /* #d1a098 soft blush */
+  --border: 238 226 223;       /* #eee2df */
+}
+
 /* ============================================================
    Base
    ============================================================ */

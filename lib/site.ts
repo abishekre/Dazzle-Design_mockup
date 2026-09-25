@@ -20,23 +20,9 @@ export const site = {
   },
 };
 
-// Floral Launch — the shop line, run independently by Celin. Same site/theme,
-// separate contact so her orders reach her directly (see lib/notify.ts).
-export const shop = {
-  name: "Floral Launch",
-  by: "Celin",
-  whatsappNumber: "12819228650",
-  // Celin's order inbox lives in SHOP_NOTIFY_TO (server-side only) — keeping
-  // a personal address out of the client bundle, where it would be scraped.
-  // Delivery only, within a 30-mile radius.
-  deliveryRadiusMiles: 30,
-  deliveryAreas: ["Sugar Land", "Missouri City", "Stafford", "Sienna"],
-  instagram: "https://www.instagram.com/florallaunchbycelin/",
-};
-
 export const nav = [
   { href: "/services", label: "What we do" },
-  { href: "/shop", label: "Shop" },
+  { href: "/floral", label: "Floral Launch" },
   { href: "/portfolio", label: "Gallery" },
   { href: "/about", label: "About" },
   { href: "/faq", label: "How it works" },

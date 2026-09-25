@@ -41,6 +41,22 @@ WhatsApp alert now lands on Celin's phone, for both. Options:
 
 ---
 
+## 🆕 New question for Celin
+
+Floral Launch is now built as its **own brand** — its own name, palette,
+header, footer and order form, sharing none of Dazzle's identity. It can be
+moved onto its own domain at any time (see `docs/FLORAL-INDEPENDENCE.md`).
+
+**Ask her:** does she want her own web address? Options:
+- **Free** — `florallaunchbycelin.vercel.app`, available immediately
+- **Paid** — a custom domain like `florallaunch.com`, roughly $12–15/year
+
+Until she picks one, her shop lives at `/floral` on the Dazzle site, which
+means it would go down with Dazzle. Her own domain is what makes it truly
+independent.
+
+---
+
 ## 🔴 Still outstanding
 
 | # | What we need | Why it matters |

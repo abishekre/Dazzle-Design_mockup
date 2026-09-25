@@ -1,14 +1,26 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { whatsappLink, site } from "@/lib/site";
 import { WhatsAppIcon, CloseIcon } from "./icons";
 
 /**
  * Floating WhatsApp widget — gentle delayed entrance, never an aggressive
  * auto-popup. A small prompt bubble appears once, then can be dismissed.
+ *
+ * Brand-agnostic: each layout passes its own link and copy, so Dazzle Designs
+ * and Floral Launch share the behaviour without sharing an identity.
  */
-export function WhatsAppWidget() {
+export function WhatsAppWidget({
+  href,
+  bubbleTitle,
+  bubbleBody,
+  ariaLabel = "Chat with us on WhatsApp",
+}: {
+  href: string;
+  bubbleTitle: string;
+  bubbleBody: string;
+  ariaLabel?: string;
+}) {
   const [mounted, setMounted] = useState(false);
   const [showBubble, setShowBubble] = useState(false);
 
@@ -20,10 +32,6 @@ export function WhatsAppWidget() {
       clearTimeout(t2);
     };
   }, []);
-
-  const href = whatsappLink(
-    `Hi ${site.name}! I'd love to know more about your party decor.`,
-  );
 
   return (
     <div
@@ -41,8 +49,8 @@ export function WhatsAppWidget() {
           >
             <CloseIcon className="h-3.5 w-3.5" />
           </button>
-          <p className="font-medium text-ink">Questions about your event?</p>
-          <p className="mt-0.5 text-muted">We usually reply within a few hours.</p>
+          <p className="font-medium text-ink">{bubbleTitle}</p>
+          <p className="mt-0.5 text-muted">{bubbleBody}</p>
         </div>
       )}
 
@@ -50,7 +58,7 @@ export function WhatsAppWidget() {
         href={href}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Chat with us on WhatsApp"
+        aria-label={ariaLabel}
         className="group flex h-14 w-14 items-center justify-center rounded-full text-surface shadow-lift transition-transform duration-200 ease-out-soft hover:scale-105 active:scale-95"
         style={{ backgroundColor: "#25d366" }}
       >

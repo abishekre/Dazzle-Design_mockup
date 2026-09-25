@@ -4,7 +4,8 @@ import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { motion, useReducedMotion } from "framer-motion";
 import { SparkIcon } from "./icons";
-import { eventTypes, checklistItems, budgetRanges, shop } from "@/lib/site";
+import { eventTypes, checklistItems, budgetRanges } from "@/lib/site";
+import { floral } from "@/lib/floral";
 
 const MIN_LEAD_DAYS = 7;
 
@@ -13,11 +14,14 @@ const field =
   "transition-colors duration-200 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/25";
 const label = "block text-sm font-semibold text-ink";
 
-export function QuoteForm() {
+export function QuoteForm({ channel = "event" }: { channel?: "event" | "shop" }) {
   const params = useSearchParams();
   const prefillItem = params.get("item") ?? "";
   const prefillPrice = params.get("price") ?? "";
-  const isProduct = Boolean(prefillPrice); // arrived from the shop, not an occasion
+  // Which business this order belongs to. Celin's own enquiry page passes
+  // "shop" explicitly — inferring it from ?price= alone would send an order
+  // placed without a preselected item to the Dazzle inbox instead of hers.
+  const isProduct = channel === "shop" || Boolean(prefillPrice);
   const reduce = useReducedMotion();
 
   const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
@@ -106,8 +110,8 @@ export function QuoteForm() {
             <div>
               <p className="text-sm font-semibold text-ink">{prefillItem}</p>
               <p className="text-xs text-muted">
-                Starting price: {prefillPrice} · final price may vary with customization. {shop.name}{" "}
-                orders are handled directly by {shop.by}.
+                Starting price: {prefillPrice} · final price may vary with customization. {floral.name}{" "}
+                orders are handled directly by {floral.by}.
               </p>
             </div>
             <span className="shrink-0 font-display text-lg text-primary-strong">{prefillPrice}</span>

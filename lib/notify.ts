@@ -1,5 +1,6 @@
 import { Resend } from "resend";
-import { site, shop } from "./site";
+import { site } from "./site";
+import { floral } from "./floral";
 
 export type Channel = "event" | "shop";
 
@@ -53,7 +54,7 @@ export async function notifyTeam(data: QuoteData): Promise<void> {
 
 function summaryLines(data: QuoteData): string[] {
   return [
-    data.channel === "shop" ? `New ${shop.name} order` : `New quote request`,
+    data.channel === "shop" ? `New ${floral.name} order` : `New quote request`,
     `${data.name} · ${data.email}${data.phone ? ` · ${data.phone}` : ""}`,
     data.eventType || data.eventDate ? `${[data.eventType, data.eventDate].filter(Boolean).join(" · ")}` : "",
     data.item ? `Item: ${data.item}${data.quantity ? ` (x${data.quantity})` : ""}` : "",
@@ -129,7 +130,7 @@ async function sendEmail(data: QuoteData) {
     .map(([k, v]) => `<tr><td style="padding:4px 12px 4px 0;color:#6b615a">${k}</td><td style="padding:4px 0">${v}</td></tr>`)
     .join("");
 
-  const heading = isShop ? `New ${shop.name} order` : "New quote request";
+  const heading = isShop ? `New ${floral.name} order` : "New quote request";
 
   await resend.emails.send({
     from,

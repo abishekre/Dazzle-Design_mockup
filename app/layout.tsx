@@ -1,25 +1,18 @@
-import type { Metadata } from "next";
 import { fontDisplay, fontBody } from "./fonts";
-import { site } from "@/lib/site";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { WhatsAppWidget } from "@/components/WhatsAppWidget";
-import { MobileActionBar } from "@/components/MobileActionBar";
 import "./globals.css";
 
-export const metadata: Metadata = {
-  title: {
-    default: `${site.name} — ${site.tagline}`,
-    template: `%s · ${site.name}`,
-  },
-  description: site.subtitle,
-  openGraph: {
-    title: `${site.name} — ${site.tagline}`,
-    description: site.subtitle,
-    type: "website",
-  },
-};
-
+/**
+ * True root layout: document shell only — fonts, global CSS, skip link.
+ *
+ * Deliberately carries NO branding, navigation or metadata. Two independent
+ * brands live under this shell, each owning its own chrome and identity:
+ *   app/(dazzle)  → Dazzle Designs   (event decor)
+ *   app/(floral)  → Floral Launch    (Celin's own shop)
+ *
+ * Floral Launch is meant to outlive Dazzle Designs, so nothing Dazzle-specific
+ * may be added here — it would silently leak into her pages. See
+ * app/(floral)/layout.tsx.
+ */
 export default function RootLayout({
   children,
 }: {
@@ -34,11 +27,7 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <Header />
-        <main id="main">{children}</main>
-        <Footer />
-        <WhatsAppWidget />
-        <MobileActionBar />
+        {children}
       </body>
     </html>
   );

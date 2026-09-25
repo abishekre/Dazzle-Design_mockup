@@ -2,16 +2,27 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { whatsappLink, site } from "@/lib/site";
 import { WhatsAppIcon } from "./icons";
 
 /**
- * Thumb-zone action bar for phones (md:hidden). Persistent, app-like: primary
- * "Request a Quote" plus a one-tap WhatsApp. Hidden on the quote page itself.
+ * Thumb-zone action bar for phones (md:hidden). Persistent, app-like: a primary
+ * call to action plus a one-tap WhatsApp. Hidden on the page it points at.
+ *
+ * Brand-agnostic — see WhatsAppWidget.
  */
-export function MobileActionBar() {
+export function MobileActionBar({
+  href,
+  label,
+  whatsappHref,
+  whatsappLabel = "Message us on WhatsApp",
+}: {
+  href: string;
+  label: string;
+  whatsappHref: string;
+  whatsappLabel?: string;
+}) {
   const pathname = usePathname();
-  if (pathname === "/quote") return null;
+  if (pathname === href) return null;
 
   return (
     <div
@@ -19,14 +30,14 @@ export function MobileActionBar() {
       style={{ paddingBottom: "max(0.625rem, env(safe-area-inset-bottom))" }}
     >
       <div className="mx-auto flex max-w-md items-center gap-2.5">
-        <Link href="/quote" className="btn-primary flex-1">
-          Request a Quote
+        <Link href={href} className="btn-primary flex-1">
+          {label}
         </Link>
         <a
-          href={whatsappLink(`Hi ${site.name}! I have a question about your decor.`)}
+          href={whatsappHref}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Message us on WhatsApp"
+          aria-label={whatsappLabel}
           className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full text-surface shadow-soft transition-transform active:scale-95"
           style={{ backgroundColor: "#25d366" }}
         >
