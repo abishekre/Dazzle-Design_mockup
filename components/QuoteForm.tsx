@@ -79,8 +79,9 @@ export function QuoteForm({ channel = "event" }: { channel?: "event" | "shop" })
             </div>
             <h2 className="mt-5 font-display text-3xl">Thank you!</h2>
             <p className="mx-auto mt-3 max-w-md text-muted">
-              Your request is in. Our team will get back to you soon — usually within a day — to talk
-              through your {isProduct ? "order" : "event"}.
+              Your request is in. {isProduct ? `${floral.by} will` : "Our team will"} get back to
+              you soon — usually within a day — to talk through your{" "}
+              {isProduct ? "order" : "event"}.
             </p>
           </div>
         </motion.div>
@@ -147,7 +148,10 @@ export function QuoteForm({ channel = "event" }: { channel?: "event" | "shop" })
           )}
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2">
+        {/* Guests, budget and location are event-planning questions — a shop
+            order has no use for them, so product mode drops all three and the
+            date takes the full width. */}
+        <div className={`grid gap-5 ${isProduct ? "" : "sm:grid-cols-2"}`}>
           <Field
             id="eventDate"
             label={isProduct ? "Needed by" : "Event date"}
@@ -157,24 +161,28 @@ export function QuoteForm({ channel = "event" }: { channel?: "event" | "shop" })
           >
             <input id="eventDate" name="eventDate" type="date" min={minDate} className={field} />
           </Field>
-          <Field id="guests" label="Approx. guests" hint="Optional">
-            <input id="guests" name="guests" inputMode="numeric" className={field} placeholder="e.g. 40" />
-          </Field>
+          {!isProduct && (
+            <Field id="guests" label="Approx. guests" hint="Optional">
+              <input id="guests" name="guests" inputMode="numeric" className={field} placeholder="e.g. 40" />
+            </Field>
+          )}
         </div>
 
-        <div className="grid gap-5 sm:grid-cols-2">
-          <Field id="budget" label="Budget range" hint="Optional">
-            <select id="budget" name="budget" className={field} defaultValue="">
-              <option value="" disabled>Choose a range…</option>
-              {budgetRanges.map((b) => (
-                <option key={b}>{b}</option>
-              ))}
-            </select>
-          </Field>
-          <Field id="area" label="Event location / area" hint="Optional">
-            <input id="area" name="area" className={field} placeholder="Suburb or venue" />
-          </Field>
-        </div>
+        {!isProduct && (
+          <div className="grid gap-5 sm:grid-cols-2">
+            <Field id="budget" label="Budget range" hint="Optional">
+              <select id="budget" name="budget" className={field} defaultValue="">
+                <option value="" disabled>Choose a range…</option>
+                {budgetRanges.map((b) => (
+                  <option key={b}>{b}</option>
+                ))}
+              </select>
+            </Field>
+            <Field id="area" label="Event location / area" hint="Optional">
+              <input id="area" name="area" className={field} placeholder="Suburb or venue" />
+            </Field>
+          </div>
+        )}
 
         {/* Checklist — cuts down on back-and-forth about what the venue already provides */}
         {!isProduct && (
@@ -242,7 +250,7 @@ function Field({
   children: React.ReactNode;
 }) {
   return (
-    <div>
+    <div className="min-w-0">
       <div className="mb-1.5 flex items-baseline justify-between gap-2">
         <label htmlFor={id} className={label}>
           {labelText}

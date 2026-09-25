@@ -75,6 +75,17 @@ body {
   background-position: 0 0, 13px 13px;
 }
 
+/* Native date inputs keep their own intrinsic width on iOS Safari and will
+   punch out of a narrow container even with w-full. Stripping the native
+   appearance and capping the width keeps the field inside the card on phones;
+   the grid cells themselves carry min-w-0 (see QuoteForm's Field). */
+input[type="date"] {
+  -webkit-appearance: none;
+  appearance: none;
+  min-width: 0;
+  max-width: 100%;
+}
+
 h1, h2, h3, h4 {
   font-family: var(--font-display), Georgia, serif;
   color: rgb(var(--ink));
